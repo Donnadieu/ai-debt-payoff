@@ -4,8 +4,12 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from config import settings
+import schemas
+from schemas import PayoffPlanRequest
 from database import create_db_and_tables
+from planner import PayoffCalculator, validate_debt_portfolio, handle_edge_cases
+from models import Debt
+from config import settings
 
 
 @asynccontextmanager
@@ -62,6 +66,44 @@ async def get_debts():
 async def create_debt():
     """Create a new debt."""
     return {"message": "Debt creation endpoint - to be implemented"}
+
+
+@app.post("/plan")
+async def calculate_payoff_plan(request: PayoffPlanRequest):
+    """Calculate debt payoff plan using specified strategy."""
+    try:
+        # Validate and clean debt data
+        debt_dicts = [debt.dict() for debt in request.debts]
+        validation_errors = validate_debt_portfolio(debt_dicts)
+        
+        if validation_errors:
+            raise HTTPException(status_code=400, detail={"errors": validation_errors})
+        
+        # Handle edge cases
+        cleaned_debts = handle_edge_cases(debt_dicts)
+        
+        # Convert to Debt objects for calculation
+        debt_objects = []
+        for debt_data in cleaned_debts:
+            debt_objects.append(Debt(**debt_data))
+        
+        # Initialize calculator with extra payment
+        calculator = PayoffCalculator(extra_payment=request.extra_payment)
+        
+        # Calculate based on strategy
+        if request.strategy == "snowball":
+            result = calculator.calculate_snowball(debt_objects)
+        elif request.strategy == "avalanche":
+            result = calculator.calculate_avalanche(debt_objects)
+        elif request.strategy == "compare":
+            result = calculator.compare_strategies(debt_objects)
+        else:
+            raise HTTPException(status_code=400, detail="Invalid strategy. Use 'snowball', 'avalanche', or 'compare'")
+        
+        return result
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Calculation error: {str(e)}")
 
 
 @app.get("/api/v1/debts/{debt_id}")

@@ -106,3 +106,22 @@ class ErrorResponse(BaseModel):
     detail: str
     error_code: Optional[str] = None
     timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+
+# Payoff Plan schemas
+class PayoffPlanRequest(BaseModel):
+    """Schema for payoff plan calculation request."""
+    debts: list[DebtCreate] = Field(..., min_items=1, max_items=10, description="List of debts to calculate payoff for")
+    strategy: str = Field(..., description="Payoff strategy: 'snowball', 'avalanche', or 'compare'")
+    extra_payment: float = Field(default=0.0, ge=0, description="Extra monthly payment amount")
+
+
+class PayoffPlanResponse(BaseModel):
+    """Schema for payoff plan calculation response."""
+    strategy: str
+    total_months: int
+    total_payments: float
+    total_interest: float
+    payoff_timeline: dict
+    monthly_schedule: list
+    summary: dict
