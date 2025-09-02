@@ -1,7 +1,7 @@
 ---
 created: 2025-09-01T23:21:46Z
-last_updated: 2025-09-02T03:49:56Z
-version: 1.2
+last_updated: 2025-09-02T04:16:03Z
+version: 1.3
 author: Claude Code PM System
 ---
 
@@ -37,9 +37,11 @@ backend/
 ├── database.py                 # Database connection setup
 ├── models.py                   # SQLModel database models
 ├── schemas.py                  # Pydantic request/response models
+├── planner.py                  # Debt calculation algorithms (Snowball/Avalanche)
+├── test_planner.py             # Unit tests for debt algorithms
 ├── requirements.txt            # Python dependencies
-├── debt_payoff.db             # SQLite database file
-└── __pycache__/               # Python bytecode cache
+├── debt_payoff.db             # SQLite database file (gitignored)
+└── __pycache__/               # Python bytecode cache (gitignored)
 ```
 
 ### Frontend Structure (Planned)
