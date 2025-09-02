@@ -1,8 +1,8 @@
 ---
 name: debt-coach-backend
-status: backlog
+status: in-progress
 created: 2025-09-01T23:36:27Z
-progress: 0%
+progress: 13%
 prd: .claude/prds/debt-coach-backend.md
 github: https://github.com/Donnadieu/ai-debt-payoff/issues/12
 ---
