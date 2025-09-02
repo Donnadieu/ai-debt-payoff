@@ -225,6 +225,51 @@ def validate_debt_portfolio(debts: List[Dict[str, Any]]) -> List[str]:
     if not debts:
         errors.append("At least one debt is required")
         return errors
+    
+    if len(debts) > 10:
+        errors.append("Maximum 10 debts supported for performance requirements")
+    
+    for i, debt in enumerate(debts):
+        debt_prefix = f"Debt {i+1}"
+        
+        # Required fields
+        required_fields = ['name', 'balance', 'interest_rate', 'minimum_payment']
+        for field in required_fields:
+            if field not in debt:
+                errors.append(f"{debt_prefix}: Missing required field '{field}'")
+                continue
+        
+        # Validate numeric fields
+        try:
+            balance = float(debt['balance'])
+            if balance < 0:
+                errors.append(f"{debt_prefix}: Balance cannot be negative")
+            elif balance == 0:
+                errors.append(f"{debt_prefix}: Zero balance debts should be excluded")
+        except (ValueError, TypeError):
+            errors.append(f"{debt_prefix}: Invalid balance value")
+        
+        try:
+            interest_rate = float(debt['interest_rate'])
+            if interest_rate < 0 or interest_rate > 100:
+                errors.append(f"{debt_prefix}: Interest rate must be between 0-100%")
+        except (ValueError, TypeError):
+            errors.append(f"{debt_prefix}: Invalid interest rate value")
+        
+        try:
+            min_payment = float(debt['minimum_payment'])
+            if min_payment < 0:
+                errors.append(f"{debt_prefix}: Minimum payment cannot be negative")
+            elif min_payment > balance:
+                errors.append(f"{debt_prefix}: Minimum payment exceeds balance")
+        except (ValueError, TypeError):
+            errors.append(f"{debt_prefix}: Invalid minimum payment value")
+        
+        # Validate name
+        if not debt.get('name', '').strip():
+            errors.append(f"{debt_prefix}: Name cannot be empty")
+    
+    return errors
 
 
 class PerformanceOptimizer:

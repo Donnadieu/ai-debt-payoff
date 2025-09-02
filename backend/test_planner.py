@@ -134,7 +134,7 @@ class TestPayoffCalculator:
         # Verify only minimum payments are made
         first_month = result['monthly_schedule'][0]
         expected_total = sum(debt.minimum_payment for debt in self.test_debts)
-        assert abs(first_month['total_payment'] - expected_total) < 0.01
+        assert abs(float(first_month['total_payment']) - float(expected_total)) < 0.01
 
 
 class TestValidation:
