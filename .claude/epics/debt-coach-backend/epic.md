@@ -2,7 +2,7 @@
 name: debt-coach-backend
 status: in-progress
 created: 2025-09-01T23:36:27Z
-progress: 13%
+progress: 25%
 prd: .claude/prds/debt-coach-backend.md
 github: https://github.com/Donnadieu/ai-debt-payoff/issues/12
 ---
@@ -192,8 +192,8 @@ High-level task categories for implementation:
 - **Documentation**: Comprehensive README and API documentation requirements
 
 ## Tasks Created
-- [ ] #13 - Core API Foundation (parallel: true)
-- [ ] #14 - Debt Calculation Engine (parallel: true)
+- [x] #13 - Core API Foundation (parallel: true)
+- [x] #14 - Debt Calculation Engine (parallel: true)
 - [ ] #15 - LLM Integration System (parallel: false)
 - [ ] #16 - Slip Detection Logic (parallel: true)
 - [ ] #17 - Database & Persistence (parallel: true)
