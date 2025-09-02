@@ -11,6 +11,8 @@ from planner import PayoffCalculator, validate_debt_portfolio, handle_edge_cases
 from models import Debt
 from config import settings
 from app.api.endpoints import slip
+from app.api import analytics
+from app.middleware.performance import setup_middleware
 
 
 @asynccontextmanager
@@ -38,6 +40,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Setup analytics and performance monitoring middleware
+setup_middleware(app, enable_performance=True, enable_analytics=True)
 
 
 @app.get("/")
@@ -141,11 +146,8 @@ async def create_nudge():
 # Slip detection endpoints
 app.include_router(slip.router, prefix="/api/v1/slip", tags=["slip-detection"])
 
-# Analytics endpoints (placeholder)
-@app.get("/api/v1/analytics/progress")
-async def get_progress_analytics():
-    """Get debt payoff progress analytics."""
-    return {"analytics": {}, "message": "Analytics endpoint - to be implemented"}
+# Analytics endpoints
+app.include_router(analytics.router, tags=["analytics"])
 
 
 if __name__ == "__main__":
