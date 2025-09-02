@@ -10,6 +10,7 @@ from database import create_db_and_tables
 from planner import PayoffCalculator, validate_debt_portfolio, handle_edge_cases
 from models import Debt
 from config import settings
+from app.api.endpoints import slip
 
 
 @asynccontextmanager
@@ -136,6 +137,9 @@ async def create_nudge():
     """Create a new nudge."""
     return {"message": "Nudge creation endpoint - to be implemented"}
 
+
+# Slip detection endpoints
+app.include_router(slip.router, prefix="/api/v1/slip", tags=["slip-detection"])
 
 # Analytics endpoints (placeholder)
 @app.get("/api/v1/analytics/progress")
