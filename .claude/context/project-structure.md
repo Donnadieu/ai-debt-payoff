@@ -1,7 +1,7 @@
 ---
 created: 2025-09-01T23:21:46Z
-last_updated: 2025-09-01T23:21:46Z
-version: 1.0
+last_updated: 2025-09-02T00:03:17Z
+version: 1.1
 author: Claude Code PM System
 ---
 
@@ -16,12 +16,15 @@ ai-debt-payoff/
 │   ├── commands/               # PM command definitions
 │   ├── context/                # Project context documentation
 │   ├── epics/                  # Epic definitions and tracking
+│   │   └── debt-coach-backend/ # Active epic with 8 tasks
 │   ├── prds/                   # Product requirement documents
 │   ├── rules/                  # Project rules and guidelines
 │   └── scripts/                # Automation scripts
-├── backend/                    # FastAPI backend (empty)
+├── backend/                    # FastAPI backend (empty, ready for dev)
+├── ../epic-debt-coach-backend/ # Development worktree
 ├── AGENTS.md                   # Agent system documentation
-└── CLAUDE.md                   # Project management documentation
+├── CLAUDE.md                   # Project management documentation
+└── README.md                   # Project overview and setup
 ```
 
 ## File Organization Patterns
@@ -123,6 +126,9 @@ frontend/
 - **Backend**: `tests/` directory with pytest
 - **Frontend**: `__tests__/` co-located with components
 - **Integration**: End-to-end tests in separate directory
+
+## Update History
+- 2025-09-02T00:03:17Z: Added epic worktree structure and GitHub integration status
 
 ---
 *Structure reflects current state and planned architecture*
