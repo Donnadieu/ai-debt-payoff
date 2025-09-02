@@ -1,7 +1,7 @@
 ---
 created: 2025-09-01T23:21:46Z
-last_updated: 2025-09-02T04:16:03Z
-version: 1.3
+last_updated: 2025-09-02T05:25:13Z
+version: 1.4
 author: Claude Code PM System
 ---
 
@@ -20,7 +20,19 @@ ai-debt-payoff/
 │   ├── prds/                   # Product requirement documents
 │   ├── rules/                  # Project rules and guidelines
 │   └── scripts/                # Automation scripts
-├── backend/                    # FastAPI backend (foundation implemented)
+├── backend/                    # FastAPI backend (foundation + LLM integration implemented)
+│   ├── app/                     # Application modules
+│   │   ├── core/                # Core configurations (Redis)
+│   │   ├── services/            # Business logic services (LLM, validation)
+│   │   ├── workers/             # Background job workers
+│   │   └── templates/           # Fallback content templates
+│   ├── config.py                # Application configuration
+│   ├── database.py              # Database connection and models
+│   ├── main.py                  # FastAPI application entry point
+│   ├── planner.py               # Debt calculation algorithms
+│   ├── test_planner.py          # Unit tests for planner
+│   ├── requirements.txt         # Python dependencies
+│   └── docker-compose.yml       # Redis service configuration
 ├── ../epic-debt-coach-backend/ # Development worktree
 ├── AGENTS.md                   # Agent system documentation
 ├── CLAUDE.md                   # Project management documentation
@@ -68,7 +80,7 @@ frontend/
 ### `backend/` - API Server
 - **Purpose**: FastAPI-based REST API server
 - **Pattern**: Standard Python web application structure
-- **Status**: Core foundation implemented with 5 Python files
+- **Status**: Core foundation + LLM integration implemented with 11 Python files
 
 ### Context Documentation
 - **Location**: `.claude/context/`
@@ -93,7 +105,10 @@ frontend/
 ### Backend Modules
 - **API routes**: Grouped by feature domain
 - **Database models**: One model per file
-- **Services**: Business logic separated from routes
+- **Services**: Business logic separated from routes (LLM client, validation pipeline)
+- **Workers**: Background job processors (nudge generation)
+- **Templates**: Fallback content systems (safe nudges)
+- **Core**: Infrastructure configurations (Redis, database)
 - **Schemas**: Request/response validation
 
 ### Frontend Modules
