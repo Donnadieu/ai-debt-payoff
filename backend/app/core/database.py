@@ -4,7 +4,10 @@ from contextlib import contextmanager
 from typing import Generator
 from sqlmodel import SQLModel, create_engine, Session
 from sqlalchemy.pool import StaticPool
-from backend.config import settings
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+from config import settings
 
 
 # Create database engine with enhanced configuration

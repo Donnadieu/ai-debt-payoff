@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/analytics", tags=["analytics"])
 
 class EventRequest(BaseModel):
     """Request model for tracking events."""
-    event: str = Field(..., description="Event name")
+    event: str = Field(..., min_length=1, description="Event name")
     properties: Dict[str, Any] = Field(default_factory=dict, description="Event properties")
     user_id: Optional[str] = Field(None, description="User ID")
 
@@ -64,6 +64,13 @@ async def track_event(event_request: EventRequest):
 @router.post("/batch-track")
 async def batch_track_events(events: List[EventRequest]):
     """Track multiple analytics events in batch."""
+    # Validate batch constraints
+    if not events:
+        raise HTTPException(status_code=400, detail="Event list cannot be empty")
+    
+    if len(events) > 100:
+        raise HTTPException(status_code=400, detail="Cannot track more than 100 events in a single batch")
+    
     try:
         tracked_count = 0
         
@@ -214,23 +221,35 @@ async def clear_performance_metrics():
         raise HTTPException(status_code=500, detail=f"Failed to clear metrics: {str(e)}")
 
 
+# User interaction tracking models
+class PageViewRequest(BaseModel):
+    """Request model for page view tracking."""
+    path: str = Field(..., min_length=1, description="Page path")
+    user_id: Optional[str] = Field(None, description="User ID")
+    referrer: Optional[str] = Field(None, description="Referrer URL")
+    metadata: Optional[Dict[str, Any]] = Field(None, description="Additional metadata")
+
+
+class UserInteractionRequest(BaseModel):
+    """Request model for user interaction tracking."""
+    interaction_type: str = Field(..., min_length=1, description="Type of interaction")
+    element: str = Field(..., min_length=1, description="Element that was interacted with")
+    user_id: Optional[str] = Field(None, description="User ID")
+    metadata: Optional[Dict[str, Any]] = Field(None, description="Additional metadata")
+
+
 # User interaction tracking endpoints
 @router.post("/user/page-view")
-async def track_page_view(
-    path: str,
-    user_id: Optional[str] = None,
-    referrer: Optional[str] = None,
-    metadata: Optional[Dict[str, Any]] = None
-):
+async def track_page_view(request: PageViewRequest):
     """Track page view event."""
     try:
         properties = {
-            "path": path,
-            "referrer": referrer,
-            **(metadata or {})
+            "path": request.path,
+            "referrer": request.referrer,
+            **(request.metadata or {})
         }
         
-        analytics_core.track_event("page_view", properties, user_id)
+        analytics_core.track_event("page_view", properties, request.user_id)
         
         return {"success": True, "message": "Page view tracked"}
     
@@ -239,21 +258,16 @@ async def track_page_view(
 
 
 @router.post("/user/interaction")
-async def track_user_interaction(
-    interaction_type: str,
-    element: str,
-    user_id: Optional[str] = None,
-    metadata: Optional[Dict[str, Any]] = None
-):
+async def track_user_interaction(request: UserInteractionRequest):
     """Track user interaction event."""
     try:
         properties = {
-            "interaction_type": interaction_type,
-            "element": element,
-            **(metadata or {})
+            "interaction_type": request.interaction_type,
+            "element": request.element,
+            **(request.metadata or {})
         }
         
-        analytics_core.track_event("user_interaction", properties, user_id)
+        analytics_core.track_event("user_interaction", properties, request.user_id)
         
         return {"success": True, "message": "User interaction tracked"}
     

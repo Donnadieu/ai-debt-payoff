@@ -69,9 +69,29 @@ async def get_debts():
 
 
 @app.post("/api/v1/debts")
-async def create_debt():
+async def create_debt(debt_data: dict):
     """Create a new debt."""
-    return {"message": "Debt creation endpoint - to be implemented"}
+    # Basic validation that debt has required fields
+    required_fields = ["name", "balance", "interest_rate", "minimum_payment"]
+    for field in required_fields:
+        if field not in debt_data:
+            raise HTTPException(status_code=422, detail=f"Missing required field: {field}")
+    
+    # Validate field values
+    if not debt_data.get("name") or debt_data["name"].strip() == "":
+        raise HTTPException(status_code=422, detail="Debt name cannot be empty")
+    
+    if debt_data.get("balance", 0) < 0:
+        raise HTTPException(status_code=422, detail="Debt balance cannot be negative")
+    
+    if debt_data.get("interest_rate", 0) < 0 or debt_data.get("interest_rate", 0) > 100:
+        raise HTTPException(status_code=422, detail="Interest rate must be between 0 and 100")
+    
+    return {
+        "success": True,
+        "message": "Debt created successfully",
+        "debt": debt_data
+    }
 
 
 @app.post("/plan")

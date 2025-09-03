@@ -61,6 +61,10 @@ class PerformanceMonitor:
         if duration_ms > 1000:  # > 1 second
             logger.warning(f"Slow operation detected: {operation} took {duration_ms:.2f}ms")
     
+    def record_operation(self, operation: str, duration_ms: float, metadata: Optional[Dict[str, Any]] = None) -> None:
+        """Record an operation performance metric (alias for record_metric)."""
+        self.record_metric(operation, duration_ms, metadata)
+    
     def get_operation_stats(self, operation: str) -> Dict[str, float]:
         """Get statistics for a specific operation."""
         with self.lock:

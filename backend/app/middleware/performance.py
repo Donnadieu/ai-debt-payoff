@@ -3,7 +3,7 @@
 import time
 from typing import Callable
 from fastapi import FastAPI, Request, Response
-from fastapi.middleware.base import BaseHTTPMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 import logging
 
 from ..core.analytics import analytics_core
@@ -70,13 +70,17 @@ class PerformanceMiddleware(BaseHTTPMiddleware):
             
             # Track analytics event for successful requests
             if not error_occurred and response and self.track_analytics:
-                analytics_core.track_event("api_request", {
-                    "operation": operation_name,
-                    "status_code": response.status_code,
-                    "duration_ms": duration_ms,
-                    "success": 200 <= response.status_code < 400,
-                    **request_metadata
-                })
+                try:
+                    analytics_core.track_event("api_request", {
+                        "operation": operation_name,
+                        "status_code": response.status_code,
+                        "duration_ms": duration_ms,
+                        "success": 200 <= response.status_code < 400,
+                        **request_metadata
+                    })
+                except Exception as e:
+                    # Log analytics error but don't fail the request
+                    logger.warning(f"Analytics tracking failed: {e}")
             
             # Add performance headers to response
             if response:

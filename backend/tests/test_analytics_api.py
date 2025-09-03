@@ -56,7 +56,7 @@ class TestAnalyticsEventTracking:
         }
         
         response = client.post("/api/analytics/track", json=invalid_event)
-        assert response.status_code == 400
+        assert response.status_code == 422
         
         data = response.json()
         assert "detail" in data
@@ -347,8 +347,9 @@ class TestAnalyticsErrorHandling:
     
     def test_track_event_server_error(self, client: TestClient):
         """Test handling of server errors during event tracking."""
-        with patch('app.core.analytics.analytics_core.track_event') as mock_track:
-            mock_track.side_effect = Exception("Database error")
+        # Mock only the specific call in the endpoint, not the middleware
+        with patch('app.api.analytics.analytics_core') as mock_analytics:
+            mock_analytics.track_event.side_effect = Exception("Database error")
             
             event_data = {
                 "event": "test_event",
@@ -363,7 +364,7 @@ class TestAnalyticsErrorHandling:
     
     def test_performance_stats_error(self, client: TestClient):
         """Test handling of errors when getting performance stats."""
-        with patch('app.core.performance.get_performance_report') as mock_report:
+        with patch('app.api.analytics.get_performance_report') as mock_report:
             mock_report.side_effect = Exception("Performance error")
             
             response = client.get("/api/analytics/performance")

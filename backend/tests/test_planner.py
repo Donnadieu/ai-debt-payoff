@@ -28,8 +28,8 @@ class TestDebtValidation:
         debt = {
             "name": "Invalid Debt",
             "balance": -1000.0,
-            "apr": 15.0,
-            "min_payment": 50.0
+            "interest_rate": 15.0,
+            "minimum_payment": 50.0
         }
         errors = validate_debt_portfolio([debt])
         assert any("balance" in error.lower() for error in errors)
@@ -39,8 +39,8 @@ class TestDebtValidation:
         debt = {
             "name": "Invalid Debt",
             "balance": 1000.0,
-            "apr": -5.0,
-            "min_payment": 50.0
+            "interest_rate": -5.0,
+            "minimum_payment": 50.0
         }
         errors = validate_debt_portfolio([debt])
         assert any("apr" in error.lower() for error in errors)
@@ -50,8 +50,8 @@ class TestDebtValidation:
         debt = {
             "name": "Invalid Debt",
             "balance": 1000.0,
-            "apr": 150.0,  # 150% APR
-            "min_payment": 50.0
+            "interest_rate": 150.0,  # 150% APR
+            "minimum_payment": 50.0
         }
         errors = validate_debt_portfolio([debt])
         assert any("apr" in error.lower() for error in errors)
@@ -61,8 +61,8 @@ class TestDebtValidation:
         debt = {
             "name": "Invalid Debt",
             "balance": 1000.0,
-            "apr": 15.0,
-            "min_payment": 0.0
+            "interest_rate": 15.0,
+            "minimum_payment": 0.0
         }
         errors = validate_debt_portfolio([debt])
         assert any("payment" in error.lower() for error in errors)
@@ -76,8 +76,8 @@ class TestEdgeCaseHandling:
         debts = [{
             "name": "Paid Off Debt",
             "balance": 0.0,
-            "apr": 15.0,
-            "min_payment": 0.0
+            "interest_rate": 15.0,
+            "minimum_payment": 0.0
         }]
         cleaned = handle_edge_cases(debts)
         assert len(cleaned) == 0  # Should be filtered out
@@ -87,27 +87,27 @@ class TestEdgeCaseHandling:
         debts = [{
             "name": "Small Debt",
             "balance": 0.50,
-            "apr": 15.0,
-            "min_payment": 25.0  # Min payment > balance
+            "interest_rate": 15.0,
+            "minimum_payment": 25.0  # Min payment > balance
         }]
         cleaned = handle_edge_cases(debts)
-        assert cleaned[0]["min_payment"] <= cleaned[0]["balance"]
+        assert cleaned[0]["minimum_payment"] <= cleaned[0]["balance"]
     
     def test_handle_rounding_issues(self):
         """Test handling of floating point rounding issues."""
         debts = [{
             "name": "Rounding Debt",
             "balance": 1000.333333333,
-            "apr": 15.555555555,
-            "min_payment": 50.999999999
+            "interest_rate": 15.555555555,
+            "minimum_payment": 50.999999999
         }]
         cleaned = handle_edge_cases(debts)
         debt = cleaned[0]
         
         # Check that values are properly rounded
         assert isinstance(debt["balance"], (int, float))
-        assert isinstance(debt["apr"], (int, float))
-        assert isinstance(debt["min_payment"], (int, float))
+        assert isinstance(debt["interest_rate"], (int, float))
+        assert isinstance(debt["minimum_payment"], (int, float))
 
 
 class TestSnowballAlgorithm:
@@ -344,10 +344,10 @@ class TestCalculatorEdgeCases:
     def test_minimum_payment_exceeds_balance(self):
         """Test when minimum payment exceeds remaining balance."""
         debt_data = {
-            "name": "Small Debt",
+            "name": "Test Debt",
             "balance": 25.0,
-            "apr": 15.0,
-            "min_payment": 50.0
+            "interest_rate": 12.0,
+            "minimum_payment": 50.0
         }
         
         calculator = PayoffCalculator(extra_payment=0.0)
@@ -368,8 +368,8 @@ class TestCalculatorAccuracy:
         debt_data = {
             "name": "Test Debt",
             "balance": 1000.0,
-            "apr": 12.0,  # 1% monthly
-            "min_payment": 100.0
+            "interest_rate": 12.0,  # 1% monthly
+            "minimum_payment": 100.0
         }
         
         calculator = PayoffCalculator(extra_payment=0.0)
@@ -392,8 +392,8 @@ class TestCalculatorAccuracy:
         debt_data = {
             "name": "Test Debt",
             "balance": 1000.0,
-            "apr": 12.0,
-            "min_payment": 200.0
+            "interest_rate": 12.0,
+            "minimum_payment": 200.0
         }
         
         calculator = PayoffCalculator(extra_payment=0.0)
