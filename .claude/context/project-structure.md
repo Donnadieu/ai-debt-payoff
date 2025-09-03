@@ -1,7 +1,7 @@
 ---
 created: 2025-09-01T23:21:46Z
-last_updated: 2025-09-03T17:46:12Z
-version: 2.0
+last_updated: 2025-09-03T18:32:44Z
+version: 2.1
 author: Claude Code PM System
 ---
 
@@ -121,10 +121,34 @@ frontend/
 │   │   ├── Modal/              # Modal component with TypeScript fixes
 │   │   └── Navigation/         # Navigation components (Header, Sidebar, Breadcrumbs)
 │   ├── hooks/                  # Custom React hooks
+│   │   ├── api/                # API integration hooks (React Query)
+│   │   │   ├── index.ts        # Hook exports
+│   │   │   ├── useAnalytics.ts # Analytics API hooks
+│   │   │   ├── useCoaching.ts  # Coaching/nudge API hooks
+│   │   │   ├── useDebts.ts     # Debt management API hooks
+│   │   │   └── useStrategies.ts # Strategy calculation hooks
+│   │   └── useAuth.ts          # Authentication hook
 │   ├── App.css                 # Main application styles
 │   ├── App.tsx                 # Root React component
 │   ├── index.css               # Tailwind CSS imports and base styles
 │   ├── main.tsx                # React application entry point
+│   ├── providers/             # React context providers
+│   │   └── QueryProvider.tsx  # React Query provider setup
+│   ├── services/              # API service layer (complete)
+│   │   └── api/               # API service implementations
+│   │       ├── analyticsService.ts # Analytics API methods
+│   │       ├── auth.ts        # Authentication service
+│   │       ├── client.ts      # HTTP client configuration
+│   │       ├── coachingService.ts # Coaching/nudge API methods
+│   │       ├── debtService.ts # Debt management API methods
+│   │       ├── index.ts       # Service exports
+│   │       └── strategyService.ts # Strategy calculation API methods
+│   ├── types/                 # TypeScript type definitions
+│   │   └── api/               # API response types (complete)
+│   │       ├── analytics.ts   # Analytics type definitions
+│   │       ├── coaching.ts    # Coaching/nudge type definitions
+│   │       ├── debt.ts        # Debt management type definitions
+│   │       └── strategy.ts    # Strategy calculation type definitions
 │   └── vite-env.d.ts          # Vite environment types
 ├── public/                     # Public static assets
 ├── .env.example                # Environment variables template
@@ -149,9 +173,11 @@ frontend/
 - **Styling**: Tailwind CSS 4.1.12 with custom debt management theme
 - **Code Quality**: ESLint 9+ with Prettier integration
 - **TypeScript**: Strict mode configuration
+- **API Integration**: React Query 5.85.9 + Axios 1.11.0 (complete)
+- **Authentication**: Token-based auth with refresh logic
 - **Development**: Complete development server and build pipeline
 
-**Status**: Foundation + Component Library complete, ready for authentication and API integration
+**Status**: Foundation + Component Library + API Integration complete, ready for routing and UI implementation
 
 ## Key Directories
 
@@ -201,8 +227,14 @@ frontend/
   - Modal, Navigation (Header/Sidebar/Breadcrumbs)
   - All components with TypeScript types and Tailwind styling
 - **Pages**: Route-level components (planned)
-- **Hooks**: Custom React hooks for state management
-- **Services**: API communication layer (planned)
+- **Hooks**: Custom React hooks for state management (API integration implemented)
+  - API hooks with React Query integration (useDebts, useStrategies, useAnalytics, useCoaching)
+  - Authentication hook (useAuth) with token management
+- **Services**: API communication layer (complete)
+  - Service layer with full CRUD operations for all backend endpoints
+  - HTTP client with authentication middleware and error handling
+- **Types**: Complete TypeScript definitions for all API responses
+- **Providers**: React Query provider setup for data management
 
 ## Integration Points
 
@@ -247,6 +279,7 @@ frontend/
 - 2025-09-03T12:46:10Z: Updated epics structure - backend epic archived, frontend epic (front-end-core-funcionality) activated with tasks 22-32
 - 2025-09-03T13:13:15Z: Added complete frontend directory structure - React 19 + TypeScript foundation with Vite 6.3.5, Tailwind CSS 4.1.12, ESLint/Prettier
 - 2025-09-03T17:46:12Z: Updated frontend structure with complete UI component library - 15+ components with TypeScript fixes, Issue #25 analysis and stream tracking added
+- 2025-09-03T18:32:44Z: Updated frontend structure with complete API integration layer - React Query hooks, service layer, TypeScript types, and authentication system implemented
 
 ---
 *Structure reflects current state and planned architecture*
