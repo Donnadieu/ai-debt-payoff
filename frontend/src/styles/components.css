@@ -1,0 +1,210 @@
+/* Component-specific styles and variants */
+
+@layer components {
+  /* Navigation components */
+  .nav {
+    @apply bg-white shadow-soft border-b border-neutral-200;
+  }
+
+  .nav-link {
+    @apply px-4 py-2 text-neutral-700 hover:text-primary-600 hover:bg-primary-50;
+    @apply rounded-md transition-colors duration-200;
+  }
+
+  .nav-link.active {
+    @apply text-primary-600 bg-primary-50;
+  }
+
+  /* Button size variants */
+  .btn-xs {
+    @apply px-2 py-1 text-xs;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+
+  .btn-xl {
+    @apply px-8 py-4 text-lg;
+  }
+
+  /* Button loading state */
+  .btn-loading {
+    @apply opacity-75 cursor-not-allowed pointer-events-none;
+  }
+
+  /* Alert components */
+  .alert {
+    @apply p-4 rounded-md border-l-4;
+  }
+
+  .alert-success {
+    @apply bg-success-50 border-success-600 text-success-800;
+  }
+
+  .alert-warning {
+    @apply bg-warning-50 border-warning-600 text-warning-800;
+  }
+
+  .alert-danger {
+    @apply bg-danger-50 border-danger-600 text-danger-800;
+  }
+
+  .alert-info {
+    @apply bg-primary-50 border-primary-600 text-primary-800;
+  }
+
+  /* Badge components */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply bg-success-100 text-success-800;
+  }
+
+  .badge-warning {
+    @apply bg-warning-100 text-warning-800;
+  }
+
+  .badge-danger {
+    @apply bg-danger-100 text-danger-800;
+  }
+
+  .badge-primary {
+    @apply bg-primary-100 text-primary-800;
+  }
+
+  .badge-neutral {
+    @apply bg-neutral-100 text-neutral-800;
+  }
+
+  /* Modal components */
+  .modal-overlay {
+    @apply fixed inset-0 bg-neutral-900 bg-opacity-50 z-50;
+    @apply flex items-center justify-center p-4;
+  }
+
+  .modal {
+    @apply bg-white rounded-lg shadow-hard max-w-md w-full max-h-screen overflow-y-auto;
+    @apply animate-fade-in;
+  }
+
+  .modal-header {
+    @apply px-6 py-4 border-b border-neutral-200;
+  }
+
+  .modal-body {
+    @apply px-6 py-4;
+  }
+
+  .modal-footer {
+    @apply px-6 py-4 border-t border-neutral-200 bg-neutral-50;
+    @apply flex justify-end space-x-3;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    @apply inline-block w-4 h-4 border-2 border-current border-r-transparent;
+    @apply rounded-full animate-spin;
+  }
+
+  .spinner-lg {
+    @apply w-8 h-8 border-4;
+  }
+
+  /* Progress bar */
+  .progress {
+    @apply w-full bg-neutral-200 rounded-full overflow-hidden;
+  }
+
+  .progress-bar {
+    @apply h-2 bg-primary-600 transition-all duration-300 ease-out;
+  }
+
+  .progress-bar-success {
+    @apply bg-success-600;
+  }
+
+  .progress-bar-warning {
+    @apply bg-warning-600;
+  }
+
+  .progress-bar-danger {
+    @apply bg-danger-600;
+  }
+
+  /* Dropdown components */
+  .dropdown {
+    @apply relative inline-block;
+  }
+
+  .dropdown-menu {
+    @apply absolute z-10 mt-2 w-56 bg-white rounded-md shadow-medium border border-neutral-200;
+    @apply py-1 animate-fade-in;
+  }
+
+  .dropdown-item {
+    @apply block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50;
+    @apply hover:text-neutral-900 transition-colors duration-150;
+  }
+
+  /* Tabs */
+  .tab-list {
+    @apply flex border-b border-neutral-200;
+  }
+
+  .tab {
+    @apply px-4 py-2 text-neutral-600 hover:text-neutral-900;
+    @apply border-b-2 border-transparent hover:border-neutral-300;
+    @apply transition-colors duration-200;
+  }
+
+  .tab.active {
+    @apply text-primary-600 border-primary-600;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    @apply absolute z-20 px-2 py-1 text-xs text-white bg-neutral-900 rounded;
+    @apply pointer-events-none opacity-0 transition-opacity duration-200;
+  }
+
+  .tooltip.show {
+    @apply opacity-100;
+  }
+
+  /* Debt-specific components */
+  .debt-card {
+    @apply card border-l-4;
+  }
+
+  .debt-card.high-interest {
+    @apply border-l-danger-600;
+  }
+
+  .debt-card.medium-interest {
+    @apply border-l-warning-600;
+  }
+
+  .debt-card.low-interest {
+    @apply border-l-success-600;
+  }
+
+  .payment-strategy-card {
+    @apply card hover:shadow-medium transition-shadow duration-200;
+    @apply cursor-pointer;
+  }
+
+  .payment-strategy-card.selected {
+    @apply border-primary-600 ring-2 ring-primary-500 ring-opacity-25;
+  }
+
+  .progress-chart {
+    @apply bg-white rounded-lg shadow-soft p-6;
+  }
+}

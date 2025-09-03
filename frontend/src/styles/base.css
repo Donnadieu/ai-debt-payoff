@@ -1,0 +1,132 @@
+/* Base styles for typography and layout */
+
+/* Typography enhancements */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-neutral-900 leading-tight;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl;
+  }
+
+  h6 {
+    @apply text-base md:text-lg;
+  }
+
+  p {
+    @apply text-neutral-700 leading-relaxed;
+  }
+
+  a {
+    @apply text-primary-600 hover:text-primary-700 transition-colors;
+    @apply underline-offset-2 hover:underline;
+  }
+
+  strong {
+    @apply font-semibold text-neutral-900;
+  }
+
+  em {
+    @apply italic;
+  }
+
+  code {
+    @apply bg-neutral-100 px-2 py-1 rounded text-sm font-mono;
+    @apply text-neutral-800;
+  }
+
+  pre {
+    @apply bg-neutral-900 text-neutral-100 p-4 rounded-lg overflow-x-auto;
+    @apply text-sm font-mono;
+  }
+
+  pre code {
+    @apply bg-transparent p-0 text-neutral-100;
+  }
+
+  blockquote {
+    @apply border-l-4 border-primary-600 pl-4 italic text-neutral-600;
+  }
+
+  /* List styles */
+  ul,
+  ol {
+    @apply text-neutral-700 leading-relaxed;
+  }
+
+  ul {
+    @apply list-disc list-inside;
+  }
+
+  ol {
+    @apply list-decimal list-inside;
+  }
+
+  li {
+    @apply mb-1;
+  }
+
+  /* Table styles */
+  table {
+    @apply w-full border-collapse border border-neutral-200;
+  }
+
+  th {
+    @apply bg-neutral-50 border border-neutral-200 px-4 py-2;
+    @apply text-left font-semibold text-neutral-900;
+  }
+
+  td {
+    @apply border border-neutral-200 px-4 py-2 text-neutral-700;
+  }
+
+  /* Form base styles */
+  input,
+  textarea,
+  select {
+    @apply appearance-none;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    @apply appearance-auto;
+  }
+
+  /* Image styles */
+  img {
+    @apply max-w-full h-auto;
+  }
+}
+
+/* Print styles */
+@media print {
+  * {
+    @apply text-black bg-white;
+  }
+
+  .no-print {
+    @apply hidden;
+  }
+}
