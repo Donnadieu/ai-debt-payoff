@@ -2,11 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { debtFormSchema, DebtFormData, defaultDebtValues } from '../../schemas/debt';
-import { Button } from '../ui/Button';
-import { Input } from '../ui/Input';
-import { Select } from '../ui/Select';
-import { TextArea } from '../ui/TextArea';
-import { Card } from '../ui/Card';
+import { Button } from '../Button/Button';
+import { Input } from '../Input/Input';
+import { Select } from '../FormField/FormField';
+import { Card } from '../Card/Card';
 
 interface DebtFormProps {
   onSubmit: (data: DebtFormData) => void;

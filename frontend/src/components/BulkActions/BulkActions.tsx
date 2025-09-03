@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Debt } from '../../schemas/debt';
-import { Button } from '../ui/Button';
-import { Modal } from '../ui/Modal';
+import type { Debt } from '../../schemas/debt';
+import { Button } from '../Button/Button';
+import { Modal } from '../Modal/Modal';
 import { formatCurrency } from '../../utils/validation';
 
 interface BulkActionsProps {

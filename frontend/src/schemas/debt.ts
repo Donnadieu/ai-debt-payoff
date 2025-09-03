@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
 export const debtSchema = z.object({
+  id: z.string().optional(),
+  
   name: z.string()
     .min(1, 'Debt name is required')
     .max(100, 'Debt name must be less than 100 characters'),
@@ -28,6 +30,9 @@ export const debtSchema = z.object({
   description: z.string()
     .max(500, 'Description must be less than 500 characters')
     .optional(),
+    
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
 });
 
 export const debtFormSchema = debtSchema.extend({
@@ -50,12 +55,12 @@ export const debtFormSchema = debtSchema.extend({
 export type Debt = z.infer<typeof debtSchema>;
 export type DebtFormData = z.infer<typeof debtFormSchema>;
 
-export const defaultDebtValues: Partial<DebtFormData> = {
+export const defaultDebtValues = {
   name: '',
-  balance: '',
-  apr: '',
-  minimumPayment: '',
-  type: 'other',
-  status: 'active',
+  balance: '0',
+  apr: '0',
+  minimumPayment: '0',
+  type: 'other' as const,
+  status: 'active' as const,
   description: '',
 };
