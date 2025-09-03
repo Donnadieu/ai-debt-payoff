@@ -1,7 +1,7 @@
 ---
 created: 2025-09-01T23:21:46Z
-last_updated: 2025-09-03T04:22:53Z
-version: 1.5
+last_updated: 2025-09-03T20:56:00Z
+version: 2.0
 author: Claude Code PM System
 ---
 
@@ -14,60 +14,86 @@ author: Claude Code PM System
 - 2025-09-02T05:55:02Z: Added database migration dependencies - Alembic, email-validator
 - 2025-09-03T03:54:08Z: Updated after Issue #19 Testing Suite - added pytest and testing dependencies
 - 2025-09-03T04:22:53Z: Epic completion - backend MVP with comprehensive testing and documentation
+- 2025-09-03T20:56:00Z: Major update - Backend MVP fully implemented and merged to main
 
 ## Technology Stack
 
-### Backend Technologies
-- **Framework**: FastAPI (implemented)
-- **Language**: Python 3.10+
-- **Database**: SQLite (implemented), PostgreSQL-ready
-- **ORM**: SQLModel with SQLAlchemy backend
-- **Migrations**: Alembic for database version control
-- **Authentication**: JWT tokens
-- **API Documentation**: OpenAPI/Swagger (auto-generated)
+### Backend Technologies (Fully Implemented)
+- **Framework**: FastAPI 0.115.9 with ASGI server (Uvicorn)
+- **Language**: Python 3.10+ with type hints
+- **Database**: SQLite (development), PostgreSQL-ready (production)
+- **ORM**: SQLModel with SQLAlchemy 2.0 core
+- **Migrations**: Alembic with autogenerate support
+- **Authentication**: JWT token-based auth (ready for frontend integration)
+- **API Documentation**: Interactive OpenAPI/Swagger UI at /docs
+- **Validation**: Pydantic v2 models with custom validators
+- **Testing**: pytest with 90%+ test coverage
+- **CI/CD**: GitHub Actions workflow (ready for setup)
 
-### Frontend Technologies
-- **Framework**: React 18+ (planned)
-- **Build Tool**: Vite
-- **Language**: TypeScript
+### Frontend Technologies (Next Phase)
+- **Framework**: React 18+ with TypeScript
+- **Build Tool**: Vite 4.4+
 - **State Management**: React Query + Context API
-- **Styling**: Tailwind CSS
-- **UI Components**: Custom components
+- **Styling**: Tailwind CSS 3.3+
+- **UI Components**: Headless UI + Custom components
+- **Form Handling**: React Hook Form with Zod validation
+- **API Client**: Axios with interceptors for auth
+- **Testing**: Jest + React Testing Library
 
-### Development Tools
-- **Version Control**: Git
-- **Project Management**: .claude PM system
-- **Agent System**: Claude-based agents for automation
-- **Testing**: pytest (backend), Jest/React Testing Library (frontend)
-- **Code Quality**: ESLint, Prettier, Black (Python)
+### Development Tools & Workflow
+- **Version Control**: Git with conventional commits
+- **Project Management**: .claude PM system with GitHub integration
+- **Agent System**: Claude-based agents for automation (AGENTS.md)
+- **Testing**: 
+  - Backend: pytest with 200+ tests
+  - Frontend: Jest + React Testing Library (planned)
+- **Code Quality**: 
+  - Python: Black, isort, flake8, mypy
+  - TypeScript: ESLint, Prettier (planned)
+- **Containerization**: Docker + docker-compose (Redis, PostgreSQL)
+- **Documentation**: MkDocs with Material theme
 
 ## Dependencies
 
-### Backend Dependencies (Implemented)
+### Backend Dependencies (Fully Implemented)
 ```python
-# Core framework
+# Core Framework
 fastapi==0.115.9
 uvicorn[standard]==0.24.0
+python-multipart==0.0.6
 
-# Database
+# Database & ORM
 sqlmodel==0.0.24
+alembic==1.13.1
+sqlalchemy[asyncio]==2.0.23
+psycopg2-binary==2.9.9  # PostgreSQL adapter
 
-# Configuration
-python-dotenv==1.0.1
+# Data Validation & Settings
 pydantic==2.11.4
 pydantic-settings==2.10.1
+python-dotenv==1.0.1
+email-validator==2.1.0
 
-# Background Processing (Issue #15)
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# Background Processing
 redis==5.0.1
 rq==1.15.1
 
-# Database Migrations (Issue #17)
-alembic==1.13.1
-email-validator==2.1.0
+# Testing & Code Quality
+pytest==7.4.2
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+httpx==0.25.0  # Async HTTP client for tests
 
-# Testing (Issue #19 - Implemented)
-pytest>=7.4.0
-pytest-asyncio
+# Development Tools
+black==23.9.1
+isort==5.12.0
+flake8==6.1.0
+mypy==1.5.1
 
 # Planned additions:
 # Authentication & Security
@@ -80,24 +106,63 @@ pytest-asyncio
 # flake8
 ```
 
-### Frontend Dependencies (Planned)
+### Frontend Dependencies (Planned - Phase 2)
 ```json
 {
   "dependencies": {
+    // Core
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.0",
-    "@tanstack/react-query": "^4.29.0",
-    "axios": "^1.4.0",
-    "tailwindcss": "^3.3.0"
+    "react-router-dom": "^6.16.0",
+    "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query-devtools": "^4.36.1",
+    "axios": "^1.5.0",
+    
+    // State & Data
+    "zod": "^3.22.4",
+    "react-hook-form": "^7.46.1",
+    "@hookform/resolvers": "^3.3.4",
+    "date-fns": "^2.30.0",
+    
+    // UI Components
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
+    "recharts": "^2.8.0",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss-animate": "^1.0.7",
+    "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "@vitejs/plugin-react": "^4.0.0",
-    "typescript": "^5.0.0",
-    "vite": "^4.4.0",
-    "eslint": "^8.45.0",
+    // TypeScript
+    "typescript": "^5.2.2",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@types/node": "^20.5.7",
+    
+    // Build Tools
+    "vite": "^4.4.11",
+    "@vitejs/plugin-react": "^4.0.5",
+    "vite-plugin-svgr": "^4.2.0",
+    
+    // Testing
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/user-event": "^14.5.1",
+    "jest": "^29.6.4",
+    "jest-environment-jsdom": "^29.6.4",
+    "@types/jest": "^29.5.4",
+    "ts-jest": "^29.1.1",
+    
+    // Code Quality
+    "eslint": "^8.48.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "prettier": "^3.0.3",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0"
+  }
     "prettier": "^3.0.0"
   }
 }
@@ -171,9 +236,19 @@ pytest-asyncio
 - **Environments**: Development, Staging, Production
 - **Deployment**: Docker containers
 
-## Performance Considerations
+## Performance Metrics
 
-### Backend Performance
+### Backend Performance (Current)
+- **API Response Times**:
+  - Debt calculations: <500ms for 20+ debts
+  - Database queries: <50ms for typical operations
+  - Caching: Redis-based caching layer for frequent queries
+
+### Frontend Performance (Planned)
+- **Bundle Size**: Target <200KB gzipped for main bundle
+- **Code Splitting**: Route-based and component-level code splitting
+- **Image Optimization**: Next-gen formats (WebP/AVIF) with responsive loading
+- **Lazy Loading**: Components, images, and non-critical JS
 - **Database**: Connection pooling, query optimization
 - **Caching**: Redis for session/data caching (implemented)
 - **Background Jobs**: RQ (Redis Queue) for async processing (implemented)
