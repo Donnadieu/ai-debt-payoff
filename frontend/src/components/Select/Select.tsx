@@ -1,54 +1,101 @@
 import React from 'react';
+import {
+  Select as MuiSelect,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  FormHelperText,
+  SelectChangeEvent,
+} from '@mui/material';
 
 export interface SelectOption {
   value: string;
   label: string;
 }
 
-export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+export interface SelectProps {
   options: SelectOption[];
   label?: string;
   error?: string;
   placeholder?: string;
+  value?: string | string[];
+  multiple?: boolean;
+  fullWidth?: boolean;
+  disabled?: boolean;
+  required?: boolean;
+  size?: 'small' | 'medium';
+  variant?: 'outlined' | 'filled' | 'standard';
+  onChange?: (event: SelectChangeEvent<string | string[]>) => void;
+  className?: string;
+  id?: string;
+  name?: string;
 }
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ options, label, error, placeholder, className = '', ...props }, ref) => {
-    const selectClasses = [
-      'block w-full rounded-md border-gray-300 shadow-sm',
-      'focus:border-blue-500 focus:ring-blue-500',
-      'disabled:bg-gray-50 disabled:text-gray-500',
-      error ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : '',
-      className
-    ].filter(Boolean).join(' ');
+  ({
+    options,
+    label,
+    error,
+    placeholder,
+    value = '',
+    multiple = false,
+    fullWidth = true,
+    disabled = false,
+    required = false,
+    size = 'medium',
+    variant = 'outlined',
+    onChange,
+    className = '',
+    id,
+    name,
+    ...props
+  }, ref) => {
+    // Generate a unique ID if not provided
+    const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+    const labelId = label ? `${selectId}-label` : undefined;
 
     return (
-      <div>
+      <FormControl
+        fullWidth={fullWidth}
+        disabled={disabled}
+        required={required}
+        error={Boolean(error)}
+        size={size}
+        variant={variant}
+        className={className}
+      >
         {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <InputLabel id={labelId}>
             {label}
-          </label>
+          </InputLabel>
         )}
-        <select
+        <MuiSelect
           ref={ref}
-          className={selectClasses}
+          id={selectId}
+          name={name}
+          labelId={labelId}
+          label={label}
+          value={value}
+          multiple={multiple}
+          displayEmpty={Boolean(placeholder)}
+          onChange={onChange}
           {...props}
         >
           {placeholder && (
-            <option value="" disabled>
-              {placeholder}
-            </option>
+            <MenuItem value="" disabled>
+              <em>{placeholder}</em>
+            </MenuItem>
           )}
           {options.map((option) => (
-            <option key={option.value} value={option.value}>
+            <MenuItem key={option.value} value={option.value}>
               {option.label}
-            </option>
+            </MenuItem>
           ))}
-        </select>
+        </MuiSelect>
         {error && (
-          <p className="mt-1 text-sm text-red-600">{error}</p>
+          <FormHelperText>{error}</FormHelperText>
         )}
-      </div>
+      </FormControl>
     );
   }
 );
