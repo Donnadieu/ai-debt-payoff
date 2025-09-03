@@ -5,11 +5,14 @@
 // export { DebtCard } from './debt/DebtCard';
 
 // UI Components
-export { Button } from './Button/Button';
-export type { ButtonProps } from './Button/Button.types';
+export { Button } from './Button';
+export type { ButtonProps, Size, Variant, BaseComponentProps } from './Button';
 
-export { Input } from './Input/Input';
-export type { InputProps } from './Input/Input.types';
+export { Input } from './Input';
+export type { InputProps, InputType, ValidationState } from './Input';
+
+export { Select } from './Select';
+export type { SelectProps, SelectOption } from './Select';
 
 export { Card } from './Card/Card';
 export type { CardProps } from './Card/Card.types';
