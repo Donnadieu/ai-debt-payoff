@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export interface ModalProps {
   /** Whether the modal is open */
   isOpen: boolean;
@@ -6,7 +8,7 @@ export interface ModalProps {
   /** Optional title for the modal */
   title?: string;
   /** Modal content */
-  children: React.ReactNode;
+  children: ReactNode;
   /** Size of the modal */
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Whether to show the close button in the header */
