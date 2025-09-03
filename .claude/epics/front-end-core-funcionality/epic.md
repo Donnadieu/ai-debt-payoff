@@ -1,8 +1,8 @@
 ---
 name: front-end-core-funcionality
-status: backlog
+status: in-progress
 created: 2025-09-03T04:33:19Z
-progress: 0%
+progress: 10%
 prd: .claude/prds/front-end-core-funcionality.md
 github: https://github.com/Donnadieu/ai-debt-payoff/issues/21
 ---
