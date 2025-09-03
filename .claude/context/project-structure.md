@@ -1,7 +1,7 @@
 ---
 created: 2025-09-01T23:21:46Z
-last_updated: 2025-09-02T05:55:02Z
-version: 1.5
+last_updated: 2025-09-03T00:39:55Z
+version: 1.6
 author: Claude Code PM System
 ---
 
@@ -20,12 +20,13 @@ ai-debt-payoff/
 │   ├── prds/                   # Product requirement documents
 │   ├── rules/                  # Project rules and guidelines
 │   └── scripts/                # Automation scripts
-├── backend/                    # FastAPI backend (foundation + LLM + database implemented)
+├── backend/                    # FastAPI backend (foundation + LLM + database + analytics implemented)
 │   ├── app/                     # Application modules
-│   │   ├── api/                 # API endpoints and routing
-│   │   ├── core/                # Core configurations (Redis, database, repository)
-│   │   ├── schemas/             # SQLModel data models (nudges, analytics, users)
-│   │   ├── services/            # Business logic services (LLM, validation, nudges, analytics)
+│   │   ├── api/                 # API endpoints and routing (includes analytics endpoints)
+│   │   ├── core/                # Core configurations (Redis, database, repository, analytics, performance)
+│   │   ├── middleware/          # FastAPI middleware (performance monitoring)
+│   │   ├── schemas/             # SQLModel data models (nudges, analytics, users, events)
+│   │   ├── services/            # Business logic services (LLM, validation, nudges, analytics, events)
 │   │   ├── workers/             # Background job workers
 │   │   └── templates/           # Fallback content templates
 │   ├── migrations/              # Alembic database migrations
