@@ -9,32 +9,34 @@ export const Sidebar: React.FC<SidebarProps> = ({
   className = '',
 }) => {
   return (
-    <aside className={`bg-neutral-50 border-r border-neutral-200 transition-all duration-300 ${
-      isCollapsed ? 'w-16' : 'w-64'
-    } ${className}`}>
-      <div className="flex flex-col h-full">
+    <aside
+      className={`bg-neutral-50 border-r border-neutral-200 transition-all duration-300 ${
+        isCollapsed ? 'w-16' : 'w-64'
+      } ${className}`}
+    >
+      <div className='flex flex-col h-full'>
         {/* Toggle Button */}
         {onToggleCollapse && (
-          <div className="p-4 border-b border-neutral-200">
+          <div className='p-4 border-b border-neutral-200'>
             <Button
-              variant="outline"
-              size="sm"
+              variant='outline'
+              size='sm'
               onClick={onToggleCollapse}
-              className="w-full justify-center"
+              className='w-full justify-center'
               aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             >
               <svg
                 className={`w-4 h-4 transition-transform ${isCollapsed ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+                aria-hidden='true'
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
                   strokeWidth={2}
-                  d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+                  d='M11 19l-7-7 7-7m8 14l-7-7 7-7'
                 />
               </svg>
             </Button>
@@ -42,7 +44,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className='flex-1 p-4 space-y-2'>
           {navigationItems.map((item, index) => (
             <a
               key={index}
@@ -57,13 +59,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
               title={isCollapsed ? item.label : undefined}
             >
               {item.icon && (
-                <span className={`flex-shrink-0 ${isCollapsed ? '' : 'mr-3'}`} aria-hidden="true">
+                <span
+                  className={`flex-shrink-0 ${isCollapsed ? '' : 'mr-3'}`}
+                  aria-hidden='true'
+                >
                   {item.icon}
                 </span>
               )}
-              {!isCollapsed && (
-                <span className="truncate">{item.label}</span>
-              )}
+              {!isCollapsed && <span className='truncate'>{item.label}</span>}
             </a>
           ))}
         </nav>

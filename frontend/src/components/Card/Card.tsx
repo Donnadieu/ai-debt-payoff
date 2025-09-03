@@ -103,7 +103,18 @@ const getBackgroundClasses = (background: string): string => {
  * CardHeader component for card headers
  */
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
-  ({ className, title, subtitle, actions, divider = false, children, ...props }, ref) => {
+  (
+    {
+      className,
+      title,
+      subtitle,
+      actions,
+      divider = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <div
         ref={ref}
@@ -114,23 +125,17 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
         )}
         {...props}
       >
-        <div className="flex-1">
+        <div className='flex-1'>
           {title && (
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">
+            <h3 className='text-lg font-semibold text-gray-900 mb-1'>
               {title}
             </h3>
           )}
-          {subtitle && (
-            <p className="text-sm text-gray-500">
-              {subtitle}
-            </p>
-          )}
+          {subtitle && <p className='text-sm text-gray-500'>{subtitle}</p>}
           {children}
         </div>
         {actions && (
-          <div className="flex items-center space-x-2 ml-4">
-            {actions}
-          </div>
+          <div className='flex items-center space-x-2 ml-4'>{actions}</div>
         )}
       </div>
     );
@@ -166,7 +171,10 @@ CardBody.displayName = 'CardBody';
  * CardFooter component for card footers
  */
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
-  ({ className, children, actions, divider = false, align = 'left', ...props }, ref) => {
+  (
+    { className, children, actions, divider = false, align = 'left', ...props },
+    ref
+  ) => {
     const alignClasses = {
       left: 'justify-start',
       center: 'justify-center',
@@ -185,13 +193,9 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
         )}
         {...props}
       >
-        <div className="flex-1">
-          {children}
-        </div>
+        <div className='flex-1'>{children}</div>
         {actions && (
-          <div className="flex items-center space-x-2 ml-4">
-            {actions}
-          </div>
+          <div className='flex items-center space-x-2 ml-4'>{actions}</div>
         )}
       </div>
     );
@@ -206,12 +210,12 @@ CardFooter.displayName = 'CardFooter';
 const CardSkeleton: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={cn('animate-pulse', className)}>
-      <div className="h-4 bg-gray-200 rounded w-3/4 mb-3"></div>
-      <div className="h-3 bg-gray-200 rounded w-1/2 mb-4"></div>
-      <div className="space-y-2">
-        <div className="h-3 bg-gray-200 rounded"></div>
-        <div className="h-3 bg-gray-200 rounded w-5/6"></div>
-        <div className="h-3 bg-gray-200 rounded w-4/6"></div>
+      <div className='h-4 bg-gray-200 rounded w-3/4 mb-3'></div>
+      <div className='h-3 bg-gray-200 rounded w-1/2 mb-4'></div>
+      <div className='space-y-2'>
+        <div className='h-3 bg-gray-200 rounded'></div>
+        <div className='h-3 bg-gray-200 rounded w-5/6'></div>
+        <div className='h-3 bg-gray-200 rounded w-4/6'></div>
       </div>
     </div>
   );
@@ -221,54 +225,58 @@ const CardSkeleton: React.FC<{ className?: string }> = ({ className }) => {
  * Card component for content containers
  */
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({
-    className,
-    id,
-    children,
-    header,
-    footer,
-    padding = 'md',
-    border = 'sm',
-    shadow = 'sm',
-    hoverEffect = 'none',
-    selected = false,
-    clickable = false,
-    background = 'default',
-    loading = false,
-    onClick,
-    'data-testid': dataTestId,
-    ...props
-  }, ref) => {
+  (
+    {
+      className,
+      id,
+      children,
+      header,
+      footer,
+      padding = 'md',
+      border = 'sm',
+      shadow = 'sm',
+      hoverEffect = 'none',
+      selected = false,
+      clickable = false,
+      background = 'default',
+      loading = false,
+      onClick,
+      'data-testid': dataTestId,
+      ...props
+    },
+    ref
+  ) => {
     const isClickable = clickable || !!onClick;
-    
+
     const cardClasses = cn(
       // Base styles
       'rounded-lg overflow-hidden transition-all duration-200',
-      
+
       // Background
       getBackgroundClasses(background),
-      
+
       // Border
       getBorderClasses(border),
-      
+
       // Shadow
       getShadowClasses(shadow),
-      
+
       // Padding
       getPaddingClasses(padding),
-      
+
       // Hover effects
       getHoverEffectClasses(hoverEffect),
-      
+
       // Clickable styles
       isClickable && 'cursor-pointer',
-      
+
       // Selected state
       selected && 'ring-2 ring-blue-500 ring-opacity-50 border-blue-300',
-      
+
       // Focus styles for accessibility
-      isClickable && 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50',
-      
+      isClickable &&
+        'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50',
+
       className
     );
 
@@ -279,13 +287,17 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (isClickable && !loading && (event.key === 'Enter' || event.key === ' ')) {
+      if (
+        isClickable &&
+        !loading &&
+        (event.key === 'Enter' || event.key === ' ')
+      ) {
         event.preventDefault();
         const mouseEvent = new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
         });
-        handleClick(mouseEvent as any);
+        handleClick(mouseEvent as React.MouseEvent<HTMLDivElement>);
       }
     };
 
@@ -307,21 +319,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
           <CardSkeleton />
         ) : (
           <>
-            {header && (
-              <CardHeader>
-                {header}
-              </CardHeader>
-            )}
-            
-            <CardBody>
-              {children}
-            </CardBody>
-            
-            {footer && (
-              <CardFooter>
-                {footer}
-              </CardFooter>
-            )}
+            {header && <CardHeader>{header}</CardHeader>}
+
+            <CardBody>{children}</CardBody>
+
+            {footer && <CardFooter>{footer}</CardFooter>}
           </>
         )}
       </div>

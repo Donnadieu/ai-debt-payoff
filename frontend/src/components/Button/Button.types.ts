@@ -23,7 +23,9 @@ export interface BaseComponentProps {
 }
 
 // Button-specific props
-export interface ButtonProps extends BaseComponentProps, Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'size'> {
+export interface ButtonProps
+  extends BaseComponentProps,
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'size'> {
   /**
    * Button variant style
    */

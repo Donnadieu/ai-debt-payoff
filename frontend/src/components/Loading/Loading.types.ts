@@ -23,8 +23,8 @@ export interface SkeletonProps {
 }
 
 // Common loading state interface for consistency across components
-export interface LoadingState {
+export interface LoadingState<T = unknown> {
   isLoading: boolean;
   error?: string | null;
-  data?: any;
+  data?: T;
 }

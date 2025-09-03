@@ -9,20 +9,22 @@ export const Header: React.FC<HeaderProps> = ({
   className = '',
 }) => {
   return (
-    <header className={`bg-white shadow-sm border-b border-neutral-200 ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <header
+      className={`bg-white shadow-sm border-b border-neutral-200 ${className}`}
+    >
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <div className='flex justify-between items-center h-16'>
           {/* Brand/Logo */}
-          <div className="flex-shrink-0">
+          <div className='flex-shrink-0'>
             {brand || (
-              <div className="text-xl font-bold text-primary-600">
+              <div className='text-xl font-bold text-primary-600'>
                 Debt Payoff
               </div>
             )}
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className='hidden md:flex space-x-8'>
             {navigationItems.map((item, index) => (
               <a
                 key={index}
@@ -36,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
                 aria-disabled={item.disabled}
               >
                 {item.icon && (
-                  <span className="mr-2" aria-hidden="true">
+                  <span className='mr-2' aria-hidden='true'>
                     {item.icon}
                   </span>
                 )}
@@ -46,33 +48,29 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* User Menu */}
-          <div className="flex items-center space-x-4">
+          <div className='flex items-center space-x-4'>
             {userMenu || (
-              <Button variant="outline" size="sm">
+              <Button variant='outline' size='sm'>
                 Sign In
               </Button>
             )}
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
-            <Button
-              variant="outline"
-              size="sm"
-              aria-label="Open mobile menu"
-            >
+          <div className='md:hidden'>
+            <Button variant='outline' size='sm' aria-label='Open mobile menu'>
               <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
+                className='w-4 h-4'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+                aria-hidden='true'
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
                   strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
+                  d='M4 6h16M4 12h16M4 18h16'
                 />
               </svg>
             </Button>

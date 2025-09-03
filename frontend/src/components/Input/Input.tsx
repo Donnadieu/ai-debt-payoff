@@ -17,82 +17,86 @@ const sizeStyles: Record<Size, string> = {
 };
 
 // Base input styles
-const baseStyles = 'block rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-neutral-400';
+const baseStyles =
+  'block rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-neutral-400';
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({
-  type = 'text',
-  size = 'md',
-  validationState = 'default',
-  fullWidth = false,
-  disabled = false,
-  className = '',
-  error,
-  required = false,
-  helperText,
-  'aria-describedby': ariaDescribedBy,
-  ...props
-}, ref) => {
-  // Determine validation state based on error prop
-  const effectiveValidationState = error ? 'error' : validationState;
-  
-  const inputClasses = [
-    baseStyles,
-    sizeStyles[size],
-    validationStateStyles[effectiveValidationState],
-    fullWidth ? 'w-full' : '',
-    className,
-  ].filter(Boolean).join(' ');
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      type = 'text',
+      size = 'md',
+      validationState = 'default',
+      fullWidth = false,
+      disabled = false,
+      className = '',
+      error,
+      required = false,
+      helperText,
+      'aria-describedby': ariaDescribedBy,
+      ...props
+    },
+    ref
+  ) => {
+    // Determine validation state based on error prop
+    const effectiveValidationState = error ? 'error' : validationState;
 
-  // Generate unique IDs for accessibility
-  const inputId = props.id || `input-${Math.random().toString(36).substr(2, 9)}`;
-  const errorId = error ? `${inputId}-error` : undefined;
-  const helperTextId = helperText ? `${inputId}-helper` : undefined;
-  
-  // Combine aria-describedby with our generated IDs
-  const describedBy = [
-    ariaDescribedBy,
-    errorId,
-    helperTextId,
-  ].filter(Boolean).join(' ') || undefined;
+    const inputClasses = [
+      baseStyles,
+      sizeStyles[size],
+      validationStateStyles[effectiveValidationState],
+      fullWidth ? 'w-full' : '',
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
-  return (
-    <div className={fullWidth ? 'w-full' : ''}>
-      <input
-        ref={ref}
-        id={inputId}
-        type={type}
-        className={inputClasses}
-        disabled={disabled}
-        aria-disabled={disabled}
-        aria-required={required}
-        aria-invalid={effectiveValidationState === 'error'}
-        aria-describedby={describedBy}
-        {...props}
-      />
-      
-      {/* Error message */}
-      {error && (
-        <p
-          id={errorId}
-          className="mt-1 text-sm text-danger-600"
-          role="alert"
-          aria-live="polite"
-        >
-          {error}
-        </p>
-      )}
-      
-      {/* Helper text */}
-      {helperText && !error && (
-        <p
-          id={helperTextId}
-          className="mt-1 text-sm text-neutral-500"
-        >
-          {helperText}
-        </p>
-      )}
-    </div>
-  );
-});
+    // Generate unique IDs for accessibility
+    const inputId =
+      props.id || `input-${Math.random().toString(36).substr(2, 9)}`;
+    const errorId = error ? `${inputId}-error` : undefined;
+    const helperTextId = helperText ? `${inputId}-helper` : undefined;
+
+    // Combine aria-describedby with our generated IDs
+    const describedBy =
+      [ariaDescribedBy, errorId, helperTextId].filter(Boolean).join(' ') ||
+      undefined;
+
+    return (
+      <div className={fullWidth ? 'w-full' : ''}>
+        <input
+          ref={ref}
+          id={inputId}
+          type={type}
+          className={inputClasses}
+          disabled={disabled}
+          aria-disabled={disabled}
+          aria-required={required}
+          aria-invalid={effectiveValidationState === 'error'}
+          aria-describedby={describedBy}
+          {...props}
+        />
+
+        {/* Error message */}
+        {error && (
+          <p
+            id={errorId}
+            className='mt-1 text-sm text-danger-600'
+            role='alert'
+            aria-live='polite'
+          >
+            {error}
+          </p>
+        )}
+
+        {/* Helper text */}
+        {helperText && !error && (
+          <p id={helperTextId} className='mt-1 text-sm text-neutral-500'>
+            {helperText}
+          </p>
+        )}
+      </div>
+    );
+  }
+);
 
 Input.displayName = 'Input';

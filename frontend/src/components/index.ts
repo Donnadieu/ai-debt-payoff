@@ -32,6 +32,12 @@ export type { AlertProps } from './Alert/Alert.types';
 export { Header } from './Navigation/Header';
 export { Sidebar } from './Navigation/Sidebar';
 export { Breadcrumbs } from './Navigation/Breadcrumbs';
-export type { HeaderProps, SidebarProps, BreadcrumbsProps, NavigationItem, BreadcrumbItem } from './Navigation/Navigation.types';
+export type {
+  HeaderProps,
+  SidebarProps,
+  BreadcrumbsProps,
+  NavigationItem,
+  BreadcrumbItem,
+} from './Navigation/Navigation.types';
 
 export {};

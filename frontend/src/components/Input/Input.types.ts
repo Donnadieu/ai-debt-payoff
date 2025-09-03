@@ -2,11 +2,19 @@ import { InputHTMLAttributes } from 'react';
 import { BaseComponentProps } from '../Button/Button.types';
 
 // Input-specific types
-export type InputType = 'text' | 'number' | 'email' | 'password' | 'tel' | 'url';
+export type InputType =
+  | 'text'
+  | 'number'
+  | 'email'
+  | 'password'
+  | 'tel'
+  | 'url';
 export type ValidationState = 'default' | 'error' | 'success';
 
 // Input props extending base props and native input attributes
-export interface InputProps extends BaseComponentProps, Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface InputProps
+  extends BaseComponentProps,
+    Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   /**
    * Input type
    */

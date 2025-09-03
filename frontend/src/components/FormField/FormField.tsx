@@ -17,10 +17,7 @@ export const FormField: React.FC<FormFieldProps> = ({
   const errorId = error ? `${fieldId}-error` : undefined;
   const helperTextId = helperText ? `${fieldId}-helper` : undefined;
 
-  const wrapperClasses = [
-    'space-y-1',
-    className,
-  ].filter(Boolean).join(' ');
+  const wrapperClasses = ['space-y-1', className].filter(Boolean).join(' ');
 
   return (
     <div className={wrapperClasses}>
@@ -34,7 +31,7 @@ export const FormField: React.FC<FormFieldProps> = ({
         >
           {labelContent || label}
           {required && (
-            <span className="ml-1 text-danger-500" aria-label="required">
+            <span className='ml-1 text-danger-500' aria-label='required'>
               *
             </span>
           )}
@@ -43,20 +40,19 @@ export const FormField: React.FC<FormFieldProps> = ({
 
       {/* Form control */}
       <div>
-        {React.Children.map(children, (child) => {
+        {React.Children.map(children, child => {
           if (React.isValidElement(child)) {
             // Clone the child element and pass down the necessary props
             return React.cloneElement(child, {
               id: fieldId,
-              'aria-describedby': [
-                child.props['aria-describedby'],
-                errorId,
-                helperTextId,
-              ].filter(Boolean).join(' ') || undefined,
+              'aria-describedby':
+                [child.props['aria-describedby'], errorId, helperTextId]
+                  .filter(Boolean)
+                  .join(' ') || undefined,
               'aria-required': required,
               'aria-invalid': !!error,
               disabled: disabled || child.props.disabled,
-            } as any);
+            } as React.HTMLAttributes<HTMLElement>);
           }
           return child;
         })}
@@ -66,9 +62,9 @@ export const FormField: React.FC<FormFieldProps> = ({
       {error && (
         <p
           id={errorId}
-          className="text-sm text-danger-600"
-          role="alert"
-          aria-live="polite"
+          className='text-sm text-danger-600'
+          role='alert'
+          aria-live='polite'
         >
           {error}
         </p>
@@ -76,10 +72,7 @@ export const FormField: React.FC<FormFieldProps> = ({
 
       {/* Helper text */}
       {helperText && !error && (
-        <p
-          id={helperTextId}
-          className="text-sm text-neutral-500"
-        >
+        <p id={helperTextId} className='text-sm text-neutral-500'>
           {helperText}
         </p>
       )}

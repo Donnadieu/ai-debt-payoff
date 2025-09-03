@@ -10,7 +10,13 @@ export type Size = 'sm' | 'md' | 'lg';
 /**
  * Common color variants for UI components
  */
-export type Variant = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'outline';
+export type Variant =
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'success'
+  | 'warning'
+  | 'outline';
 
 /**
  * Common props that many components will extend
@@ -20,17 +26,17 @@ export interface BaseProps {
    * Additional CSS class names to apply
    */
   className?: string;
-  
+
   /**
    * Unique identifier for the element
    */
   id?: string;
-  
+
   /**
    * React children elements
    */
   children?: React.ReactNode;
-  
+
   /**
    * Test ID for automated testing
    */
