@@ -1,7 +1,6 @@
 import { apiClient } from './client';
-import {
+import type {
   CoachingNudge,
-  CreateNudgeRequest,
   UpdateNudgeRequest,
   CoachingInsight,
   CoachingGoal,

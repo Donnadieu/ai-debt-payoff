@@ -1,4 +1,5 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { BaseProps, ClickableProps, SizedProps } from '../../types/common';
 
 // Shared size variants that other components can use
 export type Size = 'sm' | 'md' | 'lg';

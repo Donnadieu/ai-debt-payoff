@@ -1,4 +1,4 @@
-import { BaseEntity } from './common';
+import type { BaseEntity } from './common';
 
 export interface CoachingNudge extends BaseEntity {
   user_id: string;
@@ -14,22 +14,27 @@ export interface CoachingNudge extends BaseEntity {
   context_data?: Record<string, any>;
 }
 
-export enum NudgeType {
-  PAYMENT_REMINDER = 'payment_reminder',
-  STRATEGY_SUGGESTION = 'strategy_suggestion',
-  MILESTONE_CELEBRATION = 'milestone_celebration',
-  SLIP_DETECTION = 'slip_detection',
-  MOTIVATION = 'motivation',
-  EDUCATIONAL = 'educational',
-  GOAL_ADJUSTMENT = 'goal_adjustment',
-}
+export const NudgeType = {
+  MOTIVATIONAL: 'motivational',
+  REMINDER: 'reminder',
+  WARNING: 'warning',
+  CELEBRATION: 'celebration',
+  TIP: 'tip',
+  CHALLENGE: 'challenge',
+  MILESTONE: 'milestone',
+  SLIP_PREVENTION: 'slip_prevention',
+} as const;
 
-export enum NudgePriority {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-  URGENT = 'urgent',
-}
+export type NudgeType = typeof NudgeType[keyof typeof NudgeType];
+
+export const NudgePriority = {
+  LOW: 'low',
+  MEDIUM: 'medium',
+  HIGH: 'high',
+  URGENT: 'urgent',
+} as const;
+
+export type NudgePriority = typeof NudgePriority[keyof typeof NudgePriority];
 
 export interface CreateNudgeRequest {
   nudge_type: NudgeType;
@@ -58,21 +63,23 @@ export interface CoachingInsight extends BaseEntity {
   impact_level: ImpactLevel;
 }
 
-export enum InsightType {
-  SPENDING_PATTERN = 'spending_pattern',
-  PAYMENT_BEHAVIOR = 'payment_behavior',
-  STRATEGY_EFFECTIVENESS = 'strategy_effectiveness',
-  GOAL_PROGRESS = 'goal_progress',
-  RISK_ASSESSMENT = 'risk_assessment',
-  OPPORTUNITY = 'opportunity',
-}
+export const InsightType = {
+  SPENDING_PATTERN: 'spending_pattern',
+  PROGRESS_UPDATE: 'progress_update',
+  OPTIMIZATION: 'optimization',
+  BEHAVIORAL: 'behavioral',
+  FINANCIAL_HEALTH: 'financial_health',
+} as const;
 
-export enum ImpactLevel {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-  CRITICAL = 'critical',
-}
+export type InsightType = typeof InsightType[keyof typeof InsightType];
+
+export const ImpactLevel = {
+  LOW: 'low',
+  MEDIUM: 'medium',
+  HIGH: 'high',
+} as const;
+
+export type ImpactLevel = typeof ImpactLevel[keyof typeof ImpactLevel];
 
 export interface DataPoint {
   label: string;
@@ -93,14 +100,15 @@ export interface CoachingGoal extends BaseEntity {
   progress_percentage: number;
 }
 
-export enum GoalType {
-  DEBT_FREE_DATE = 'debt_free_date',
-  TOTAL_INTEREST_SAVINGS = 'total_interest_savings',
-  MONTHLY_PAYMENT_REDUCTION = 'monthly_payment_reduction',
-  EMERGENCY_FUND = 'emergency_fund',
-  CREDIT_SCORE_IMPROVEMENT = 'credit_score_improvement',
-  DEBT_TO_INCOME_RATIO = 'debt_to_income_ratio',
-}
+export const GoalType = {
+  DEBT_PAYOFF: 'debt_payoff',
+  SAVINGS: 'savings',
+  SPENDING_REDUCTION: 'spending_reduction',
+  INCOME_INCREASE: 'income_increase',
+  EMERGENCY_FUND: 'emergency_fund',
+} as const;
+
+export type GoalType = typeof GoalType[keyof typeof GoalType];
 
 export interface CreateGoalRequest {
   goal_type: GoalType;
@@ -130,20 +138,23 @@ export interface SlipDetection extends BaseEntity {
   resolution_notes?: string;
 }
 
-export enum SlipType {
-  MISSED_PAYMENT = 'missed_payment',
-  REDUCED_PAYMENT = 'reduced_payment',
-  NEW_DEBT_ADDED = 'new_debt_added',
-  STRATEGY_ABANDONED = 'strategy_abandoned',
-  GOAL_REGRESSION = 'goal_regression',
-}
+export const SlipType = {
+  OVERSPENDING: 'overspending',
+  MISSED_PAYMENT: 'missed_payment',
+  NEW_DEBT: 'new_debt',
+  GOAL_ABANDONMENT: 'goal_abandonment',
+} as const;
 
-export enum SlipSeverity {
-  MINOR = 'minor',
-  MODERATE = 'moderate',
-  MAJOR = 'major',
-  CRITICAL = 'critical',
-}
+export type SlipType = typeof SlipType[keyof typeof SlipType];
+
+export const SlipSeverity = {
+  MINOR: 'minor',
+  MODERATE: 'moderate',
+  MAJOR: 'major',
+  CRITICAL: 'critical',
+} as const;
+
+export type SlipSeverity = typeof SlipSeverity[keyof typeof SlipSeverity];
 
 export interface ResolveSlipRequest {
   resolution_notes: string;

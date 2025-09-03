@@ -1,5 +1,4 @@
-import { BaseEntity } from './common';
-import { Debt } from './debt';
+import type { BaseEntity } from './common';
 
 export interface PayoffStrategy extends BaseEntity {
   name: string;
@@ -10,11 +9,13 @@ export interface PayoffStrategy extends BaseEntity {
   is_active: boolean;
 }
 
-export enum StrategyType {
-  SNOWBALL = 'snowball',
-  AVALANCHE = 'avalanche',
-  CUSTOM = 'custom',
-}
+export const StrategyType = {
+  DEBT_SNOWBALL: 'debt_snowball',
+  DEBT_AVALANCHE: 'debt_avalanche',
+  CUSTOM: 'custom',
+} as const;
+
+export type StrategyType = typeof StrategyType[keyof typeof StrategyType];
 
 export interface CreateStrategyRequest {
   name: string;
@@ -90,9 +91,11 @@ export interface Milestone {
   debt_name?: string;
 }
 
-export enum MilestoneType {
-  DEBT_PAID_OFF = 'debt_paid_off',
-  HALFWAY_POINT = 'halfway_point',
-  FINAL_PAYMENT = 'final_payment',
-  SAVINGS_MILESTONE = 'savings_milestone',
-}
+export const MilestoneType = {
+  DEBT_PAID_OFF: 'debt_paid_off',
+  HALFWAY_POINT: 'halfway_point',
+  SAVINGS_GOAL: 'savings_goal',
+  INTEREST_SAVED: 'interest_saved',
+} as const;
+
+export type MilestoneType = typeof MilestoneType[keyof typeof MilestoneType];

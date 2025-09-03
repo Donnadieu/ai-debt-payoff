@@ -1,4 +1,4 @@
-import { BaseEntity } from './common';
+import type { BaseEntity } from './common';
 
 export interface Debt extends BaseEntity {
   name: string;
@@ -9,14 +9,16 @@ export interface Debt extends BaseEntity {
   user_id: string;
 }
 
-export enum DebtType {
-  CREDIT_CARD = 'credit_card',
-  STUDENT_LOAN = 'student_loan',
-  MORTGAGE = 'mortgage',
-  PERSONAL_LOAN = 'personal_loan',
-  AUTO_LOAN = 'auto_loan',
-  OTHER = 'other',
-}
+export const DebtType = {
+  CREDIT_CARD: 'credit_card',
+  STUDENT_LOAN: 'student_loan',
+  MORTGAGE: 'mortgage',
+  AUTO_LOAN: 'auto_loan',
+  PERSONAL_LOAN: 'personal_loan',
+  OTHER: 'other',
+} as const;
+
+export type DebtType = typeof DebtType[keyof typeof DebtType];
 
 export interface CreateDebtRequest {
   name: string;
@@ -42,11 +44,13 @@ export interface DebtPayment extends BaseEntity {
   notes?: string;
 }
 
-export enum PaymentType {
-  MINIMUM = 'minimum',
-  EXTRA = 'extra',
-  LUMP_SUM = 'lump_sum',
-}
+export const PaymentType = {
+  MINIMUM: 'minimum',
+  EXTRA: 'extra',
+  LUMP_SUM: 'lump_sum',
+} as const;
+
+export type PaymentType = typeof PaymentType[keyof typeof PaymentType];
 
 export interface CreatePaymentRequest {
   debt_id: string;

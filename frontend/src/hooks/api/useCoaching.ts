@@ -1,12 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { CoachingService } from '../../services/api';
-import {
-  CoachingNudge,
-  CoachingInsight,
-  CoachingGoal,
+import type {
   CreateGoalRequest,
   UpdateGoalRequest,
-  SlipDetection,
   ResolveSlipRequest,
   QueryParams,
 } from '../../types/api';

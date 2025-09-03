@@ -1,12 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { DebtService } from '../../services/api';
-import {
-  Debt,
+import type {
   CreateDebtRequest,
   UpdateDebtRequest,
-  DebtPayment,
   CreatePaymentRequest,
-  DebtSummary,
   QueryParams,
 } from '../../types/api';
 

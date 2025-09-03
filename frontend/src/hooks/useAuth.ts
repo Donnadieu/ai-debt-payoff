@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AuthService } from '../services/api/auth';
-import { AuthState, LoginRequest, RegisterRequest, User } from '../types/auth';
+import type { AuthState, LoginRequest, RegisterRequest } from '../types/auth';
 
 export const useAuth = () => {
   const [state, setState] = useState<AuthState>({

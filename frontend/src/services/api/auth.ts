@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import { LoginRequest, RegisterRequest, AuthResponse, RefreshTokenRequest } from '../../types/auth';
+import type { LoginRequest, RegisterRequest, AuthResponse, RefreshTokenRequest } from '../../types/auth';
 
 export class AuthService {
   private static readonly TOKEN_KEY = 'access_token';

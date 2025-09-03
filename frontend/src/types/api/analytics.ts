@@ -1,4 +1,4 @@
-import { BaseEntity } from './common';
+import type { BaseEntity } from './common';
 
 export interface AnalyticsEvent extends BaseEntity {
   user_id: string;
@@ -8,20 +8,19 @@ export interface AnalyticsEvent extends BaseEntity {
   timestamp: string;
 }
 
-export enum EventType {
-  PAGE_VIEW = 'page_view',
-  DEBT_CREATED = 'debt_created',
-  DEBT_UPDATED = 'debt_updated',
-  DEBT_DELETED = 'debt_deleted',
-  PAYMENT_RECORDED = 'payment_recorded',
-  STRATEGY_CREATED = 'strategy_created',
-  STRATEGY_UPDATED = 'strategy_updated',
-  STRATEGY_COMPARED = 'strategy_compared',
-  GOAL_SET = 'goal_set',
-  MILESTONE_REACHED = 'milestone_reached',
-  EXPORT_DATA = 'export_data',
-  COACHING_VIEWED = 'coaching_viewed',
-}
+export const EventType = {
+  PAGE_VIEW: 'page_view',
+  BUTTON_CLICK: 'button_click',
+  FORM_SUBMIT: 'form_submit',
+  DEBT_ADDED: 'debt_added',
+  PAYMENT_MADE: 'payment_made',
+  STRATEGY_CREATED: 'strategy_created',
+  GOAL_SET: 'goal_set',
+  SESSION_START: 'session_start',
+  SESSION_END: 'session_end',
+} as const;
+
+export type EventType = typeof EventType[keyof typeof EventType];
 
 export interface CreateEventRequest {
   event_type: EventType;

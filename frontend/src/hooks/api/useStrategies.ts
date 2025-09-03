@@ -1,11 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { StrategyService } from '../../services/api';
-import {
-  PayoffStrategy,
+import type {
   CreateStrategyRequest,
   UpdateStrategyRequest,
-  StrategyComparison,
-  StrategyAnalysis,
   QueryParams,
 } from '../../types/api';
 

@@ -1,11 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AnalyticsService } from '../../services/api';
-import {
-  AnalyticsEvent,
-  CreateEventRequest,
-  UserSession,
-  AnalyticsDashboard,
-  PerformanceMetrics,
+import type { 
+  CreateEventRequest, 
   QueryParams,
 } from '../../types/api';
 
@@ -122,8 +118,6 @@ export const useExportAnalytics = () => {
 
 // Convenience hooks for common tracking
 export const usePageTracking = () => {
-  const trackEvent = useTrackEvent();
-
   return {
     trackPageView: (page: string, additionalData?: Record<string, any>) => {
       return AnalyticsService.trackPageView(page, additionalData);
