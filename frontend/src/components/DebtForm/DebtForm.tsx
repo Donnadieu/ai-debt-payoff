@@ -1,10 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { debtFormSchema, DebtFormData, defaultDebtValues } from '../../schemas/debt';
+import { debtFormInputSchema, debtFormSchema, defaultDebtValues } from '../../schemas/debt';
+import type { DebtFormInput, DebtFormData } from '../../schemas/debt';
 import { Button } from '../Button/Button';
 import { Input } from '../Input/Input';
-import { Select } from '../FormField/FormField';
+import { Select } from '../Select/Select';
+import { TextArea } from '../TextArea/TextArea';
 import { Card } from '../Card/Card';
 
 interface DebtFormProps {
@@ -26,9 +28,9 @@ export const DebtForm: React.FC<DebtFormProps> = ({
     formState: { errors, isSubmitting },
     reset,
     watch
-  } = useForm<DebtFormData>({
-    resolver: zodResolver(debtFormSchema),
-    defaultValues: { ...defaultDebtValues, ...initialData }
+  } = useForm<DebtFormInput>({
+    resolver: zodResolver(debtFormInputSchema),
+    defaultValues: { ...defaultDebtValues, ...initialData } as DebtFormInput
   });
 
   const watchedBalance = watch('balance');

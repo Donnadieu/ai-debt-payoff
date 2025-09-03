@@ -35,7 +35,33 @@ export const debtSchema = z.object({
   updatedAt: z.string().optional(),
 });
 
-export const debtFormSchema = debtSchema.extend({
+// Form input schema (before transformation)
+export const debtFormInputSchema = z.object({
+  id: z.string().optional(),
+  name: z.string()
+    .min(1, 'Debt name is required')
+    .max(100, 'Debt name must be less than 100 characters'),
+  balance: z.string()
+    .min(1, 'Balance is required'),
+  apr: z.string()
+    .min(1, 'APR is required'),
+  minimumPayment: z.string()
+    .min(1, 'Minimum payment is required'),
+  type: z.enum(['credit_card', 'loan', 'mortgage', 'other'])
+    .optional()
+    .default('other'),
+  status: z.enum(['active', 'paid_off', 'closed'])
+    .optional()
+    .default('active'),
+  description: z.string()
+    .max(500, 'Description must be less than 500 characters')
+    .optional(),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
+});
+
+// Form schema with transformations
+export const debtFormSchema = debtFormInputSchema.extend({
   balance: z.string()
     .min(1, 'Balance is required')
     .transform((val) => parseFloat(val))
@@ -53,6 +79,7 @@ export const debtFormSchema = debtSchema.extend({
 });
 
 export type Debt = z.infer<typeof debtSchema>;
+export type DebtFormInput = z.infer<typeof debtFormInputSchema>;
 export type DebtFormData = z.infer<typeof debtFormSchema>;
 
 export const defaultDebtValues = {
