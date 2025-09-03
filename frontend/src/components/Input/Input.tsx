@@ -1,24 +1,26 @@
 import React, { forwardRef } from 'react';
+import { TextField, TextFieldProps as MuiTextFieldProps } from '@mui/material';
 import type { InputProps, ValidationState } from './Input.types';
 import type { Size } from '../Button/Button.types';
 
-// Input validation state styles
-const validationStateStyles: Record<ValidationState, string> = {
-  default: 'border-neutral-300 focus:border-primary-500 focus:ring-primary-500',
-  error: 'border-danger-300 focus:border-danger-500 focus:ring-danger-500',
-  success: 'border-success-300 focus:border-success-500 focus:ring-success-500',
+// Map our custom sizes to MUI sizes
+const getMuiSize = (size: Size): 'small' | 'medium' => {
+  return size === 'sm' ? 'small' : 'medium';
 };
 
-// Input size styles
-const sizeStyles: Record<Size, string> = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-3 py-2 text-base',
-  lg: 'px-4 py-3 text-lg',
+// Map our custom validation state to MUI color and error state
+const getMuiProps = (validationState: ValidationState, error?: string): {
+  error: boolean;
+  color: MuiTextFieldProps['color'];
+} => {
+  if (error || validationState === 'error') {
+    return { error: true, color: 'primary' };
+  }
+  if (validationState === 'success') {
+    return { error: false, color: 'success' };
+  }
+  return { error: false, color: 'primary' };
 };
-
-// Base input styles
-const baseStyles =
-  'block rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-neutral-400';
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
@@ -32,69 +34,33 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       error,
       required = false,
       helperText,
-      'aria-describedby': ariaDescribedBy,
+      placeholder,
       ...props
     },
     ref
   ) => {
-    // Determine validation state based on error prop
-    const effectiveValidationState = error ? 'error' : validationState;
+    const muiSize = getMuiSize(size);
+    const { error: hasError, color } = getMuiProps(validationState, error);
 
-    const inputClasses = [
-      baseStyles,
-      sizeStyles[size],
-      validationStateStyles[effectiveValidationState],
-      fullWidth ? 'w-full' : '',
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
-    // Generate unique IDs for accessibility
-    const inputId =
-      props.id || `input-${Math.random().toString(36).substr(2, 9)}`;
-    const errorId = error ? `${inputId}-error` : undefined;
-    const helperTextId = helperText ? `${inputId}-helper` : undefined;
-
-    // Combine aria-describedby with our generated IDs
-    const describedBy =
-      [ariaDescribedBy, errorId, helperTextId].filter(Boolean).join(' ') ||
-      undefined;
+    // Determine helper text to display
+    const displayHelperText = error || helperText;
 
     return (
-      <div className={fullWidth ? 'w-full' : ''}>
-        <input
-          ref={ref}
-          id={inputId}
-          type={type}
-          className={inputClasses}
-          disabled={disabled}
-          aria-disabled={disabled}
-          aria-required={required}
-          aria-invalid={effectiveValidationState === 'error'}
-          aria-describedby={describedBy}
-          {...props}
-        />
-
-        {/* Error message */}
-        {error && (
-          <p
-            id={errorId}
-            className='mt-1 text-sm text-danger-600'
-            role='alert'
-            aria-live='polite'
-          >
-            {error}
-          </p>
-        )}
-
-        {/* Helper text */}
-        {helperText && !error && (
-          <p id={helperTextId} className='mt-1 text-sm text-neutral-500'>
-            {helperText}
-          </p>
-        )}
-      </div>
+      <TextField
+        inputRef={ref}
+        type={type}
+        size={muiSize}
+        fullWidth={fullWidth}
+        disabled={disabled}
+        required={required}
+        error={hasError}
+        color={color}
+        placeholder={placeholder}
+        helperText={displayHelperText}
+        className={className}
+        variant="outlined"
+        {...props}
+      />
     );
   }
 );
