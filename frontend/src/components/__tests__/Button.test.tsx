@@ -1,67 +1,76 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { ThemeProvider } from '@mui/material/styles';
 import { Button } from '../Button/Button';
+import { theme } from '../../theme';
+
+// Helper function to render with theme
+const renderWithTheme = (component: React.ReactElement) => {
+  return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
+};
 
 describe('Button', () => {
   it('renders with default props', () => {
-    render(<Button>Click me</Button>);
+    renderWithTheme(<Button>Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass('bg-primary-600'); // primary variant
+    expect(button).toHaveClass('MuiButton-root');
+    expect(button).toHaveClass('MuiButton-contained');
   });
 
   it('renders different variants correctly', () => {
-    const { rerender } = render(<Button variant='secondary'>Secondary</Button>);
-    expect(screen.getByRole('button')).toHaveClass('bg-neutral-100');
+    const { rerender } = renderWithTheme(<Button variant='secondary'>Secondary</Button>);
+    expect(screen.getByRole('button')).toHaveClass('MuiButton-containedSecondary');
 
     rerender(<Button variant='danger'>Danger</Button>);
-    expect(screen.getByRole('button')).toHaveClass('bg-danger-600');
+    expect(screen.getByRole('button')).toHaveClass('MuiButton-containedError');
 
     rerender(<Button variant='outline'>Outline</Button>);
-    expect(screen.getByRole('button')).toHaveClass('bg-transparent');
+    expect(screen.getByRole('button')).toHaveClass('MuiButton-outlined');
   });
 
   it('renders different sizes correctly', () => {
-    const { rerender } = render(<Button size='sm'>Small</Button>);
-    expect(screen.getByRole('button')).toHaveClass('px-3 py-1.5 text-sm');
+    const { rerender } = renderWithTheme(<Button size='sm'>Small</Button>);
+    expect(screen.getByRole('button')).toHaveClass('MuiButton-sizeSmall');
 
     rerender(<Button size='lg'>Large</Button>);
-    expect(screen.getByRole('button')).toHaveClass('px-6 py-3 text-lg');
+    expect(screen.getByRole('button')).toHaveClass('MuiButton-sizeLarge');
   });
 
   it('handles loading state', () => {
-    render(<Button loading>Loading</Button>);
+    renderWithTheme(<Button loading>Loading</Button>);
     const button = screen.getByRole('button');
     expect(button).toBeDisabled();
-    expect(button).toHaveAttribute('aria-disabled', 'true');
     expect(screen.getByText('Loading...')).toBeInTheDocument();
+    // Check for loading spinner
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
   it('handles disabled state', () => {
-    render(<Button disabled>Disabled</Button>);
+    renderWithTheme(<Button disabled>Disabled</Button>);
     const button = screen.getByRole('button');
     expect(button).toBeDisabled();
-    expect(button).toHaveAttribute('aria-disabled', 'true');
+    expect(button).toHaveClass('Mui-disabled');
   });
 
   it('handles click events', () => {
     const handleClick = jest.fn();
-    render(<Button onClick={handleClick}>Click me</Button>);
+    renderWithTheme(<Button onClick={handleClick}>Click me</Button>);
 
     fireEvent.click(screen.getByRole('button'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
   it('renders with full width', () => {
-    render(<Button fullWidth>Full Width</Button>);
-    expect(screen.getByRole('button')).toHaveClass('w-full');
+    renderWithTheme(<Button fullWidth>Full Width</Button>);
+    expect(screen.getByRole('button')).toHaveClass('MuiButton-fullWidth');
   });
 
   it('renders with icons', () => {
     const startIcon = <span data-testid='start-icon'>→</span>;
     const endIcon = <span data-testid='end-icon'>←</span>;
 
-    render(
+    renderWithTheme(
       <Button startIcon={startIcon} endIcon={endIcon}>
         With Icons
       </Button>
