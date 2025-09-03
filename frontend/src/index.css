@@ -1,27 +1,25 @@
+/* Note: Custom styles imported at the end after Tailwind is loaded */
+
 /* Import Tailwind CSS directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import custom styles */
-@import url('./styles/base.css');
-@import url('./styles/components.css');
-
 /* Custom CSS properties for the application */
 :root {
   /* Color scheme variables */
-  --color-primary: theme(colors.primary.600);
-  --color-primary-hover: theme(colors.primary.700);
-  --color-secondary: theme(colors.secondary.600);
-  --color-secondary-hover: theme(colors.secondary.700);
+  --color-primary: #0284c7;
+  --color-primary-hover: #0369a1;
+  --color-secondary: #dc2626;
+  --color-secondary-hover: #b91c1c;
 
   /* Typography */
-  --font-family-primary: theme(fontFamily.sans);
-  --font-family-secondary: theme(fontFamily.serif);
+  --font-family-primary: 'Inter', system-ui, sans-serif;
+  --font-family-secondary: 'Georgia', serif;
 
   /* Spacing */
   --container-max-width: 1200px;
-  --container-padding: theme(spacing.4);
+  --container-padding: 1rem;
 
   /* Animations */
   --transition-duration: 200ms;
@@ -162,3 +160,5 @@
     padding-right: env(safe-area-inset-right);
   }
 }
+
+/* Additional component styles will be added here or imported via JavaScript modules */
