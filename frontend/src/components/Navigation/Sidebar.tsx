@@ -1,5 +1,5 @@
 import React from 'react';
-import { SidebarProps } from './Navigation.types';
+import type { SidebarProps } from './Navigation.types';
 import { Button } from '../Button/Button';
 
 export const Sidebar: React.FC<SidebarProps> = ({

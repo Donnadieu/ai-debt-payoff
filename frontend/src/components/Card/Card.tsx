@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { cn } from '../../utils';
-import {
+import type {
   CardProps,
   CardHeaderProps,
   CardBodyProps,

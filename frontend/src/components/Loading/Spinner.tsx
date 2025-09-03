@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { SpinnerProps } from './Loading.types';
+import type { SpinnerProps } from './Loading.types';
 
 const sizeClasses = {
   sm: 'h-4 w-4',

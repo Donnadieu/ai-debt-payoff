@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { SkeletonProps } from './Loading.types';
+import type { SkeletonProps } from './Loading.types';
 
 const variantClasses = {
   text: 'rounded-md',

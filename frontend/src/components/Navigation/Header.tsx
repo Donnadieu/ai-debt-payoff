@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderProps } from './Navigation.types';
+import type { HeaderProps } from './Navigation.types';
 import { Button } from '../Button/Button';
 
 export const Header: React.FC<HeaderProps> = ({

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { ButtonProps, Size, Variant } from './Button.types';
+import type { ButtonProps, Size, Variant } from './Button.types';
 
 // Button variant styles using Tailwind classes
 const variantStyles: Record<Variant, string> = {

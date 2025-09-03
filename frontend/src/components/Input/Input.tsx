@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
-import { InputProps, ValidationState } from './Input.types';
-import { Size } from '../Button/Button.types';
+import type { InputProps, InputSize, InputVariant } from './Input.types';
+import type { Size } from '../Button/Button.types';
 
 // Input validation state styles
 const validationStateStyles: Record<ValidationState, string> = {

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { AlertProps } from './Alert.types';
+import type { AlertProps } from './Alert.types';
 
 // Default icons for each variant
 const defaultIcons = {

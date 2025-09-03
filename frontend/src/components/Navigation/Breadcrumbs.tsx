@@ -1,5 +1,5 @@
 import React from 'react';
-import { BreadcrumbsProps } from './Navigation.types';
+import type { BreadcrumbsProps } from './Navigation.types';
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   items,
