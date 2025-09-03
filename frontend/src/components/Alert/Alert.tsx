@@ -97,7 +97,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(
     let iconElement = null;
     if (icon === true) {
       iconElement = defaultIcons[variant];
-    } else if (icon && icon !== false) {
+    } else if (typeof icon !== 'boolean' && icon) {
       iconElement = icon;
     }
 
