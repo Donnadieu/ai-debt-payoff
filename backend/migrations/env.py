@@ -7,10 +7,11 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from alembic import context
 
 # Import all models to ensure they are registered with SQLModel
-from backend.app.schemas.nudge import Nudge
-from backend.app.schemas.analytics import AnalyticsEvent, UserSession
-from backend.app.schemas.user import User, UserProfile
-from backend.app.schemas.slip import Slip  # Import existing slip model
+# Import models from local path since we're running from backend directory
+from app.schemas.nudge import Nudge
+from app.schemas.analytics import AnalyticsEvent, UserSession
+from app.schemas.user import User, UserProfile
+from app.schemas.slip import Slip  # Import existing slip model
 
 # Import SQLModel for metadata
 from sqlmodel import SQLModel
