@@ -1,7 +1,7 @@
 ---
 created: 2025-09-01T23:21:46Z
-last_updated: 2025-09-03T04:22:53Z
-version: 1.8
+last_updated: 2025-09-03T12:46:10Z
+version: 1.9
 author: Claude Code PM System
 ---
 
@@ -16,6 +16,7 @@ ai-debt-payoff/
 │   ├── commands/               # PM command definitions
 │   ├── context/                # Project context documentation
 │   ├── epics/
+│   │   ├── front-end-core-funcionality/ # Active frontend core functionality epic
 │   │   └── archived/           # Completed epics
 │   │       └── debt-coach-backend/ # Completed backend MVP epic
 │   ├── prds/                   # Product requirement documents
@@ -102,7 +103,7 @@ backend/
 └── __pycache__/               # Python bytecode cache (gitignored)
 ```
 
-### Frontend Structure (Planned)
+### Frontend Structure (Active Epic)
 ```
 frontend/
 ├── src/
@@ -204,6 +205,7 @@ frontend/
 - 2025-09-02T05:55:02Z: Updated structure after Issues #16 & #17 (slip detection + database layer)
 - 2025-09-03T03:54:08Z: Updated structure after Issue #19 Testing Suite completion
 - 2025-09-03T04:22:53Z: Epic completion - backend MVP with docs/, examples/ and comprehensive backend structure
+- 2025-09-03T12:46:10Z: Updated epics structure - backend epic archived, frontend epic (front-end-core-funcionality) activated with tasks 22-32
 
 ---
 *Structure reflects current state and planned architecture*
