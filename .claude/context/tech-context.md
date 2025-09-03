@@ -1,7 +1,7 @@
 ---
 created: 2025-09-01T23:21:46Z
-last_updated: 2025-09-02T03:49:56Z
-version: 1.1
+last_updated: 2025-09-03T03:54:08Z
+version: 1.4
 author: Claude Code PM System
 ---
 
@@ -10,6 +10,9 @@ author: Claude Code PM System
 ## Update History
 - 2025-09-02T00:03:17Z: Added epic worktree structure and GitHub integration status
 - 2025-09-02T03:49:56Z: Updated with Issue #13 implementation - FastAPI foundation completed
+- 2025-09-02T05:25:13Z: Added LLM integration dependencies - Redis, RQ for background processing
+- 2025-09-02T05:55:02Z: Added database migration dependencies - Alembic, email-validator
+- 2025-09-03T03:54:08Z: Updated after Issue #19 Testing Suite - added pytest and testing dependencies
 
 ## Technology Stack
 
@@ -18,6 +21,7 @@ author: Claude Code PM System
 - **Language**: Python 3.10+
 - **Database**: SQLite (implemented), PostgreSQL-ready
 - **ORM**: SQLModel with SQLAlchemy backend
+- **Migrations**: Alembic for database version control
 - **Authentication**: JWT tokens
 - **API Documentation**: OpenAPI/Swagger (auto-generated)
 
@@ -52,6 +56,18 @@ python-dotenv==1.0.1
 pydantic==2.11.4
 pydantic-settings==2.10.1
 
+# Background Processing (Issue #15)
+redis==5.0.1
+rq==1.15.1
+
+# Database Migrations (Issue #17)
+alembic==1.13.1
+email-validator==2.1.0
+
+# Testing (Issue #19 - Implemented)
+pytest>=7.4.0
+pytest-asyncio
+
 # Planned additions:
 # Authentication & Security
 # python-jose[cryptography]
@@ -59,8 +75,6 @@ pydantic-settings==2.10.1
 # python-multipart
 
 # Development
-# pytest>=7.4.0
-# pytest-asyncio
 # black
 # flake8
 ```
@@ -128,9 +142,11 @@ pydantic-settings==2.10.1
 - **CORS**: Configured for frontend domain
 
 ### Database Integration
-- **Connection**: SQLAlchemy async engine
-- **Migrations**: Alembic version control
-- **Pooling**: Connection pooling for performance
+- **Connection**: SQLAlchemy engine with enhanced session management
+- **Migrations**: Alembic version control (implemented)
+- **Pooling**: Connection pooling for performance (implemented)
+- **Repository Pattern**: Generic CRUD operations with specialized repositories
+- **Transaction Management**: Context managers and decorators
 - **Backup**: Automated
 
 ## Backend Structure (Implemented)
@@ -158,7 +174,8 @@ pydantic-settings==2.10.1
 
 ### Backend Performance
 - **Database**: Connection pooling, query optimization
-- **Caching**: Redis for session/data caching (planned)
+- **Caching**: Redis for session/data caching (implemented)
+- **Background Jobs**: RQ (Redis Queue) for async processing (implemented)
 - **Async**: FastAPI async/await for I/O operations
 - **Monitoring**: Application performance monitoring
 

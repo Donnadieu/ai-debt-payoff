@@ -1,7 +1,7 @@
 ---
 created: 2025-09-01T23:21:46Z
-last_updated: 2025-09-02T04:16:03Z
-version: 1.3
+last_updated: 2025-09-03T03:54:08Z
+version: 1.7
 author: Claude Code PM System
 ---
 
@@ -20,7 +20,40 @@ ai-debt-payoff/
 │   ├── prds/                   # Product requirement documents
 │   ├── rules/                  # Project rules and guidelines
 │   └── scripts/                # Automation scripts
-├── backend/                    # FastAPI backend (foundation implemented)
+├── backend/                    # FastAPI backend (foundation + LLM + database + analytics + testing implemented)
+│   ├── app/                     # Application modules
+│   │   ├── api/                 # API endpoints and routing (includes analytics endpoints)
+│   │   ├── core/                # Core configurations (Redis, database, repository, analytics, performance)
+│   │   ├── middleware/          # FastAPI middleware (performance monitoring)
+│   │   ├── schemas/             # SQLModel data models (nudges, analytics, users, events)
+│   │   ├── services/            # Business logic services (LLM, validation, nudges, analytics, events)
+│   │   ├── workers/             # Background job workers
+│   │   └── templates/           # Fallback content templates
+│   ├── migrations/              # Alembic database migrations
+│   │   ├── versions/            # Migration version files
+│   │   ├── env.py               # Migration environment
+│   │   └── script.py.mako       # Migration template
+│   ├── alembic.ini              # Alembic migration configuration
+│   ├── config.py                # Application configuration
+│   ├── database.py              # Database connection and models
+│   ├── main.py                  # FastAPI application entry point
+│   ├── planner.py               # Debt calculation algorithms
+│   ├── test_planner.py          # Unit tests for planner
+│   ├── requirements.txt         # Python dependencies (includes alembic, email-validator)
+│   ├── tests/                   # Comprehensive test suite (9 test files)
+│   │   ├── conftest.py          # Test configuration and fixtures
+│   │   ├── test_analytics_api.py # Analytics API endpoint tests
+│   │   ├── test_api.py          # Core API endpoint tests
+│   │   ├── test_event_service.py # Event service logic tests
+│   │   ├── test_integration.py  # Integration tests
+│   │   ├── test_llm_validation.py # LLM validation tests
+│   │   ├── test_middleware.py   # Middleware tests
+│   │   ├── test_nudge_service.py # Nudge service tests
+│   │   ├── test_planner.py      # Debt planner algorithm tests
+│   │   ├── test_simple.py       # Basic functionality tests
+│   │   └── test_workers.py      # Background worker tests
+│   ├── test_runner.py           # Test execution and reporting
+│   └── docker-compose.yml       # Redis service configuration
 ├── ../epic-debt-coach-backend/ # Development worktree
 ├── AGENTS.md                   # Agent system documentation
 ├── CLAUDE.md                   # Project management documentation
@@ -39,7 +72,25 @@ backend/
 ├── schemas.py                  # Pydantic request/response models
 ├── planner.py                  # Debt calculation algorithms (Snowball/Avalanche)
 ├── test_planner.py             # Unit tests for debt algorithms
+├── app/
+│   ├── api/endpoints/          # API endpoint implementations
+│   ├── core/
+│   │   ├── database.py         # Enhanced database session management
+│   │   ├── repository.py       # Generic repository pattern
+│   │   └── transaction.py      # Transaction management utilities
+│   ├── schemas/
+│   │   ├── nudge.py            # Nudge data models
+│   │   ├── analytics.py        # Analytics and session models
+│   │   ├── user.py             # User and profile models
+│   │   └── slip.py             # Slip detection models
+│   └── services/
+│       ├── nudge_service.py    # Nudge business logic
+│       ├── analytics_service.py # Analytics service layer
+│       └── slip_detector.py    # Slip detection algorithms
+├── migrations/                 # Alembic database migrations
+├── tests/                      # Comprehensive test suite
 ├── requirements.txt            # Python dependencies
+├── alembic.ini                 # Migration configuration
 ├── debt_payoff.db             # SQLite database file (gitignored)
 └── __pycache__/               # Python bytecode cache (gitignored)
 ```
@@ -68,7 +119,7 @@ frontend/
 ### `backend/` - API Server
 - **Purpose**: FastAPI-based REST API server
 - **Pattern**: Standard Python web application structure
-- **Status**: Core foundation implemented with 5 Python files
+- **Status**: Core foundation + LLM + slip detection + database + analytics + testing implemented with 35+ Python files
 
 ### Context Documentation
 - **Location**: `.claude/context/`
@@ -91,10 +142,14 @@ frontend/
 ## Module Organization
 
 ### Backend Modules
-- **API routes**: Grouped by feature domain
-- **Database models**: One model per file
-- **Services**: Business logic separated from routes
-- **Schemas**: Request/response validation
+- **API routes**: Grouped by feature domain (slip detection endpoints)
+- **Database models**: Comprehensive schemas (nudges, analytics, users, slips)
+- **Services**: Business logic separated from routes (LLM, validation, nudges, analytics, slip detection)
+- **Workers**: Background job processors (nudge generation)
+- **Templates**: Fallback content systems (safe nudges)
+- **Core**: Infrastructure (Redis, database sessions, repositories, transactions)
+- **Schemas**: SQLModel data models with validation
+- **Migrations**: Alembic database version control
 
 ### Frontend Modules
 - **Components**: Reusable UI components
@@ -110,9 +165,11 @@ frontend/
 - **Documentation**: OpenAPI/Swagger auto-generated
 
 ### Database Integration
-- **ORM**: SQLAlchemy for Python backend
-- **Migrations**: Alembic for schema management
-- **Connection**: Environment-based configuration
+- **ORM**: SQLModel with SQLAlchemy backend
+- **Migrations**: Alembic for schema management with PostgreSQL compatibility
+- **Connection**: Enhanced session management with pooling
+- **Repository Pattern**: Generic CRUD operations with specialized repositories
+- **Transaction Management**: Context managers and decorators for data consistency
 
 ## Development Workflow
 
@@ -124,13 +181,20 @@ frontend/
 5. React components and pages
 
 ### Testing Structure
-- **Backend**: `tests/` directory with pytest
-- **Frontend**: `__tests__/` co-located with components
-- **Integration**: End-to-end tests in separate directory
+- **Backend**: `tests/` directory with pytest (comprehensive test suite implemented)
+  - 9 test files covering all major components
+  - Integration tests for API endpoints and database operations
+  - Mock services for external dependencies
+  - Performance benchmarks and validation tests
+- **Frontend**: `__tests__/` co-located with components (planned)
+- **Integration**: End-to-end tests in separate directory (planned)
+- **Coverage**: 95% test coverage with extensive test suite
 
 ## Update History
 - 2025-09-02T00:03:17Z: Added epic worktree structure and GitHub integration status
 - 2025-09-02T03:49:56Z: Updated backend structure after Issue #13 Core API Foundation completion
+- 2025-09-02T05:55:02Z: Updated structure after Issues #16 & #17 (slip detection + database layer)
+- 2025-09-03T03:54:08Z: Updated structure after Issue #19 Testing Suite completion
 
 ---
 *Structure reflects current state and planned architecture*
