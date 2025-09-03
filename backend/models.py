@@ -127,13 +127,11 @@ class Debt(DebtBase, table=True):
     
     # Relationships - Production Integration Points
     nudges: list["Nudge"] = Relationship(
-        back_populates="debt",
-        description="AI-generated coaching messages for this debt"
+        back_populates="debt"
     )
     
     analytics_events: list["AnalyticsEvent"] = Relationship(
-        back_populates="debt",
-        description="User interaction analytics for this debt"
+        back_populates="debt"
     )
 
 
@@ -245,8 +243,7 @@ class Nudge(NudgeBase, table=True):
     
     # Relationships - Production Integration
     debt: Optional[Debt] = Relationship(
-        back_populates="nudges",
-        description="Associated debt for targeted coaching messages"
+        back_populates="nudges"
     )
 
 
@@ -346,6 +343,5 @@ class AnalyticsEvent(AnalyticsEventBase, table=True):
     
     # Relationships - Production Integration
     debt: Optional[Debt] = Relationship(
-        back_populates="analytics_events",
-        description="Associated debt for debt-specific analytics events"
+        back_populates="analytics_events"
     )
