@@ -23,7 +23,7 @@ Implement a cross-platform React Native mobile application with TypeScript that 
 - **Authentication**: OAuth 2.0 with biometric fallback using react-native-keychain
 - **Push Notifications**: Expo Notifications (handles both iOS and Android)
 - **API Integration**: Axios with retry logic and offline queue management
-- **UI Components**: React Native Elements or NativeBase for consistent design
+- **UI Components**: GluestackUI v3 for consistent design. https://gluestack.io/ui/docs/home/getting-started/installation
 
 ## Technical Approach
 
