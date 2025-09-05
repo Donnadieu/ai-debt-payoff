@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BarChart3, CreditCard, Settings } from 'lucide-react-native';
 import DashboardScreen from '../screens/DashboardScreen';
 import DebtsScreen from '../screens/DebtsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -12,11 +13,19 @@ export default function TabNavigator() {
       screenOptions={{ 
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#1a1a1a',
-          borderTopColor: '#333',
+          backgroundColor: '#121212',
+          borderTopColor: '#374151',
+          borderTopWidth: 1,
+          paddingTop: 8,
+          paddingBottom: 8,
+          height: 84,
         },
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: '#8E8E93',
+        tabBarActiveTintColor: '#3B82F6',
+        tabBarInactiveTintColor: '#9CA3AF',
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '500',
+        },
       }}
     >
       <Tab.Screen 
@@ -24,6 +33,9 @@ export default function TabNavigator() {
         component={DashboardScreen}
         options={{
           tabBarLabel: 'Dashboard',
+          tabBarIcon: ({ color, size }) => (
+            <BarChart3 color={color} size={size} />
+          ),
         }}
       />
       <Tab.Screen 
@@ -31,6 +43,9 @@ export default function TabNavigator() {
         component={DebtsScreen}
         options={{
           tabBarLabel: 'My Debts',
+          tabBarIcon: ({ color, size }) => (
+            <CreditCard color={color} size={size} />
+          ),
         }}
       />
       <Tab.Screen 
@@ -38,6 +53,9 @@ export default function TabNavigator() {
         component={SettingsScreen}
         options={{
           tabBarLabel: 'Settings',
+          tabBarIcon: ({ color, size }) => (
+            <Settings color={color} size={size} />
+          ),
         }}
       />
     </Tab.Navigator>
