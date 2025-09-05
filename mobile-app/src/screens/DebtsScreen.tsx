@@ -9,7 +9,7 @@ import { Button, ButtonText } from '@/components/ui/button';
 
 export default function DebtsScreen() {
   return (
-    <ScrollView className="flex-1 bg-background">
+    <ScrollView className="flex-1" style={{ backgroundColor: '#121212' }}>
       <Box className="flex-1 p-4 pt-12">
         <VStack space="lg">
           {/* Header */}
@@ -23,7 +23,7 @@ export default function DebtsScreen() {
           </VStack>
 
           {/* Empty State */}
-          <Card className="p-6">
+          <Card className="p-6 bg-background-50 border border-outline-200">
             <VStack space="md" className="items-center">
               <Heading size="lg" className="text-typography-900 text-center">
                 No debts added yet
@@ -31,14 +31,14 @@ export default function DebtsScreen() {
               <Text size="md" className="text-typography-600 text-center">
                 Add your debts to start creating your personalized payoff plan.
               </Text>
-              <Button className="mt-4">
-                <ButtonText>Add Your First Debt</ButtonText>
+              <Button className="mt-4 bg-primary-600">
+                <ButtonText className="text-white">Add Your First Debt</ButtonText>
               </Button>
             </VStack>
           </Card>
 
           {/* Getting Started Guide */}
-          <Card className="p-4">
+          <Card className="p-4 bg-background-50 border border-outline-200">
             <VStack space="md">
               <Heading size="lg" className="text-typography-900">
                 Get Started
@@ -58,7 +58,7 @@ export default function DebtsScreen() {
           </Card>
 
           {/* Strategy Information */}
-          <Card className="p-4">
+          <Card className="p-4 bg-background-50 border border-outline-200">
             <VStack space="md">
               <Heading size="lg" className="text-typography-900">
                 Payoff Strategies

@@ -9,7 +9,7 @@ import { Card } from '@/components/ui/card';
 
 export default function DashboardScreen() {
   return (
-    <ScrollView className="flex-1 bg-background">
+    <ScrollView className="flex-1" style={{ backgroundColor: '#121212' }}>
       <Box className="flex-1 p-4 pt-12">
         <VStack space="lg">
           {/* Header */}
@@ -24,7 +24,7 @@ export default function DashboardScreen() {
 
           {/* Summary Cards */}
           <VStack space="md">
-            <Card className="p-4">
+            <Card className="p-4 bg-background-50 border border-outline-200">
               <VStack space="sm">
                 <Text size="sm" className="text-typography-600 font-medium">
                   Total Debt Remaining
@@ -36,7 +36,7 @@ export default function DashboardScreen() {
             </Card>
 
             <HStack space="md">
-              <Card className="flex-1 p-4">
+              <Card className="flex-1 p-4 bg-background-50 border border-outline-200">
                 <VStack space="sm">
                   <Text size="sm" className="text-typography-600 font-medium">
                     Monthly Payment
@@ -47,7 +47,7 @@ export default function DashboardScreen() {
                 </VStack>
               </Card>
 
-              <Card className="flex-1 p-4">
+              <Card className="flex-1 p-4 bg-background-50 border border-outline-200">
                 <VStack space="sm">
                   <Text size="sm" className="text-typography-600 font-medium">
                     Payoff Date
@@ -66,7 +66,7 @@ export default function DashboardScreen() {
               Quick Actions
             </Heading>
             
-            <Card className="p-4">
+            <Card className="p-4 bg-background-50 border border-outline-200">
               <Text size="md" className="text-typography-700">
                 Add your debts to get started with your personalized payoff plan
               </Text>
@@ -79,7 +79,7 @@ export default function DashboardScreen() {
               Your Progress
             </Heading>
             
-            <Card className="p-4">
+            <Card className="p-4 bg-background-50 border border-outline-200">
               <Text size="md" className="text-typography-700">
                 Your debt payoff journey will be tracked here
               </Text>

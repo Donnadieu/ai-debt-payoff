@@ -9,7 +9,7 @@ import { Button, ButtonText } from '@/components/ui/button';
 
 export default function SettingsScreen() {
   return (
-    <ScrollView className="flex-1 bg-background">
+    <ScrollView className="flex-1" style={{ backgroundColor: '#121212' }}>
       <Box className="flex-1 p-4 pt-12">
         <VStack space="lg">
           {/* Header */}
@@ -23,7 +23,7 @@ export default function SettingsScreen() {
           </VStack>
 
           {/* App Information */}
-          <Card className="p-4">
+          <Card className="p-4 bg-background-50 border border-outline-200">
             <VStack space="md">
               <Heading size="lg" className="text-typography-900">
                 App Information
@@ -40,27 +40,27 @@ export default function SettingsScreen() {
           </Card>
 
           {/* Preferences */}
-          <Card className="p-4">
+          <Card className="p-4 bg-background-50 border border-outline-200">
             <VStack space="md">
               <Heading size="lg" className="text-typography-900">
                 Preferences
               </Heading>
               <VStack space="sm">
-                <Button variant="outline" className="justify-start">
-                  <ButtonText>Notification Settings</ButtonText>
+                <Button variant="outline" className="justify-start border-outline-300">
+                  <ButtonText className="text-typography-800">Notification Settings</ButtonText>
                 </Button>
-                <Button variant="outline" className="justify-start">
-                  <ButtonText>Theme Settings</ButtonText>
+                <Button variant="outline" className="justify-start border-outline-300">
+                  <ButtonText className="text-typography-800">Theme Settings</ButtonText>
                 </Button>
-                <Button variant="outline" className="justify-start">
-                  <ButtonText>Data Export</ButtonText>
+                <Button variant="outline" className="justify-start border-outline-300">
+                  <ButtonText className="text-typography-800">Data Export</ButtonText>
                 </Button>
               </VStack>
             </VStack>
           </Card>
 
           {/* Coming Soon */}
-          <Card className="p-4">
+          <Card className="p-4 bg-background-50 border border-outline-200">
             <VStack space="md">
               <Heading size="lg" className="text-typography-900">
                 Features Coming Soon
@@ -86,20 +86,20 @@ export default function SettingsScreen() {
           </Card>
 
           {/* Support */}
-          <Card className="p-4">
+          <Card className="p-4 bg-background-50 border border-outline-200">
             <VStack space="md">
               <Heading size="lg" className="text-typography-900">
                 Support
               </Heading>
               <VStack space="sm">
-                <Button variant="outline" className="justify-start">
-                  <ButtonText>Help & FAQ</ButtonText>
+                <Button variant="outline" className="justify-start border-outline-300">
+                  <ButtonText className="text-typography-800">Help & FAQ</ButtonText>
                 </Button>
-                <Button variant="outline" className="justify-start">
-                  <ButtonText>Contact Support</ButtonText>
+                <Button variant="outline" className="justify-start border-outline-300">
+                  <ButtonText className="text-typography-800">Contact Support</ButtonText>
                 </Button>
-                <Button variant="outline" className="justify-start">
-                  <ButtonText>Privacy Policy</ButtonText>
+                <Button variant="outline" className="justify-start border-outline-300">
+                  <ButtonText className="text-typography-800">Privacy Policy</ButtonText>
                 </Button>
               </VStack>
             </VStack>
