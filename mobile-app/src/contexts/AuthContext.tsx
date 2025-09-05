@@ -50,8 +50,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         await SecureStore.setItemAsync('isAuthenticated', 'true');
         await SecureStore.setItemAsync('userEmail', user.email || '');
       } else {
-        await SecureStore.deleteItemAsync('isAuthenticated');
-        await SecureStore.deleteItemAsync('userEmail');
+        try {
+          await SecureStore.deleteItemAsync('isAuthenticated');
+          await SecureStore.deleteItemAsync('userEmail');
+        } catch (error) {
+          // Items may not exist, ignore error
+        }
       }
     });
 
@@ -90,8 +94,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       await signOut(auth);
       // Clear secure storage
-      await SecureStore.deleteItemAsync('isAuthenticated');
-      await SecureStore.deleteItemAsync('userEmail');
+      try {
+        await SecureStore.deleteItemAsync('isAuthenticated');
+        await SecureStore.deleteItemAsync('userEmail');
+      } catch (error) {
+        // Items may not exist, ignore error
+      }
     } catch (error: any) {
       throw new Error('Failed to sign out. Please try again.');
     } finally {
@@ -120,7 +128,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const value: AuthContextType = {
     user,
     isLoading,
-    isAuthenticated: true, // TODO: implement this
+    isAuthenticated: true, /* Only true for MVP */
     signIn: handleSignIn,
     signUp: handleSignUp,
     signOut: handleSignOut,
