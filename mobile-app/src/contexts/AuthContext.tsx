@@ -128,7 +128,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const value: AuthContextType = {
     user,
     isLoading,
-    isAuthenticated: true, /* Only true for MVP */
+    isAuthenticated: !!user, /* Only true for MVP */
     signIn: handleSignIn,
     signUp: handleSignUp,
     signOut: handleSignOut,
