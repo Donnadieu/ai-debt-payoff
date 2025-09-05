@@ -9,6 +9,7 @@ import { Button, ButtonText, ButtonSpinner } from '@/components/ui/button';
 import { Input, InputField } from '@/components/ui/input';
 import { Icon } from '@/components/ui/icon';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface LoginScreenProps {
@@ -21,7 +22,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const { signIn } = useAuth();
+  const { signIn, signInWithGoogle, signInWithApple, isLoading } = useAuth();
 
   const handleSignIn = async () => {
     if (!email.trim() || !password.trim()) {
@@ -46,6 +47,22 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 
   const navigateToResetPassword = () => {
     navigation.navigate('ResetPassword');
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (error: any) {
+      Alert.alert('Google Sign-In Failed', error.message);
+    }
+  };
+
+  const handleAppleSignIn = async () => {
+    try {
+      await signInWithApple();
+    } catch (error: any) {
+      Alert.alert('Apple Sign-In Failed', error.message);
+    }
   };
 
   return (
@@ -136,13 +153,55 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
               <Button 
                 className="bg-blue-600 hover:bg-blue-700"
                 onPress={handleSignIn}
-                disabled={isSubmitting}
+                disabled={isSubmitting || isLoading}
               >
-                {isSubmitting && <ButtonSpinner className="mr-2" />}
+                {(isSubmitting || isLoading) && <ButtonSpinner className="mr-2" />}
                 <ButtonText className="text-white font-semibold">
-                  {isSubmitting ? 'Signing In...' : 'Sign In'}
+                  {(isSubmitting || isLoading) ? 'Signing In...' : 'Sign In'}
                 </ButtonText>
               </Button>
+
+              {/* Divider */}
+              <VStack space="md" className="items-center">
+                <Box className="flex-row items-center w-full">
+                  <Box className="flex-1 h-px bg-gray-600" />
+                  <Text size="sm" className="text-gray-400 mx-4">or</Text>
+                  <Box className="flex-1 h-px bg-gray-600" />
+                </Box>
+              </VStack>
+
+              {/* Provider Sign-In Buttons */}
+              <VStack space="sm" className="items-center">
+                <Box className="flex-row space-x-4">
+                  {/* Google Sign-In */}
+                  <Button 
+                    variant="outline"
+                    className="border-gray-600 bg-gray-700/50 w-14 h-14 rounded-full"
+                    onPress={handleGoogleSignIn}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <ButtonSpinner />
+                    ) : (
+                      <AntDesign name="google" size={24} color="white" />
+                    )}
+                  </Button>
+
+                  {/* Apple Sign-In */}
+                  <Button 
+                    variant="outline"
+                    className="border-gray-600 bg-gray-700/50 w-14 h-14 rounded-full ml-4"
+                    onPress={handleAppleSignIn}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <ButtonSpinner />
+                    ) : (
+                      <AntDesign name="apple1" size={24} color="white" />
+                    )}
+                  </Button>
+                </Box>
+              </VStack>
             </VStack>
           </Card>
 

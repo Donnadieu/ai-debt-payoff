@@ -6,9 +6,15 @@ import {
   signOut,
   sendPasswordResetEmail,
   sendEmailVerification,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signInWithCredential,
+  GoogleAuthProvider,
+  OAuthProvider
 } from 'firebase/auth';
 import * as SecureStore from 'expo-secure-store';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Crypto from 'expo-crypto';
 import { auth } from '../config/firebase';
 
 interface AuthContextType {
@@ -17,6 +23,8 @@ interface AuthContextType {
   isAuthenticated: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithApple: () => Promise<void>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   sendEmailVerification: () => Promise<void>;
@@ -39,6 +47,14 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Configure Google Sign-In
+    GoogleSignin.configure({
+      webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+      iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
+    });
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -115,6 +131,63 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const handleGoogleSignIn = async (): Promise<void> => {
+    try {
+      setIsLoading(true);
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      
+      if (userInfo.data?.idToken) {
+        const googleCredential = GoogleAuthProvider.credential(userInfo.data.idToken);
+        await signInWithCredential(auth, googleCredential);
+      } else {
+        throw new Error('Failed to get Google ID token');
+      }
+    } catch (error: any) {
+      if (error.code === 'SIGN_IN_CANCELLED') {
+        throw new Error('Google Sign-In was cancelled');
+      }
+      throw new Error('Google Sign-In failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAppleSignIn = async (): Promise<void> => {
+    try {
+      setIsLoading(true);
+      const nonce = Math.random().toString(36).substring(2, 15);
+      const hashedNonce = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, nonce);
+      
+      const appleCredential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+        nonce: hashedNonce,
+      });
+
+      if (appleCredential.identityToken) {
+        const provider = new OAuthProvider('apple.com');
+        const credential = provider.credential({
+          idToken: appleCredential.identityToken,
+          rawNonce: nonce,
+        });
+        
+        await signInWithCredential(auth, credential);
+      } else {
+        throw new Error('Failed to get Apple ID token');
+      }
+    } catch (error: any) {
+      if (error.code === 'ERR_REQUEST_CANCELED') {
+        throw new Error('Apple Sign-In was cancelled');
+      }
+      throw new Error('Apple Sign-In failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSendEmailVerification = async (): Promise<void> => {
     if (user) {
       try {
@@ -128,9 +201,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const value: AuthContextType = {
     user,
     isLoading,
-    isAuthenticated: !!user, /* Only true for MVP */
+    isAuthenticated: !!user,
     signIn: handleSignIn,
     signUp: handleSignUp,
+    signInWithGoogle: handleGoogleSignIn,
+    signInWithApple: handleAppleSignIn,
     signOut: handleSignOut,
     resetPassword: handleResetPassword,
     sendEmailVerification: handleSendEmailVerification,
