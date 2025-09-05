@@ -111,24 +111,72 @@ export default function DashboardScreen() {
             </VStack>
           </VStack>
 
-          {/* Progress Section */}
+          {/* MVP Feature 3: Progress Visualization */}
           <VStack space="md">
             <HStack space="sm" className="items-center">
-              <Icon as={Target} size="sm" className="text-gray-400" />
-              <Heading size="lg" className="text-typography-900">
-                Your Progress
+              <Icon as={Target} size="sm" className="text-blue-400" />
+              <Heading size="lg" className="text-white font-semibold">
+                Progress Visualization
               </Heading>
             </HStack>
             
+            {/* Progress Chart Placeholder */}
             <Card className="p-5 bg-gray-800/50 border border-gray-600/50 shadow-sm rounded-xl">
-              <VStack space="md" className="items-center">
-                <Icon as={Target} size="2xl" className="text-blue-400" />
-                <Text size="lg" className="text-white font-semibold text-center">
-                  Ready to Start Your Journey?
+              <VStack space="md">
+                <Text size="md" className="text-white font-semibold">
+                  Debt Payoff Progress
                 </Text>
-                <Text size="sm" className="text-gray-300 text-center">
-                  Add your debts to see progress charts, payoff timelines, and motivational insights
-                </Text>
+                
+                {/* Progress Bar Simulation */}
+                <VStack space="sm">
+                  <HStack className="justify-between">
+                    <Text size="sm" className="text-gray-300">32% Complete</Text>
+                    <Text size="sm" className="text-gray-300">18 months remaining</Text>
+                  </HStack>
+                  <Box className="w-full h-3 bg-gray-700 rounded-full">
+                    <Box className="w-1/3 h-3 bg-blue-500 rounded-full" />
+                  </Box>
+                </VStack>
+                
+                {/* Chart Placeholder */}
+                <Card className="p-4 bg-gray-700/50 border border-gray-600/30">
+                  <VStack space="xs" className="items-center">
+                    <Text size="sm" className="text-gray-400">
+                      📊 Payoff Timeline Chart
+                    </Text>
+                    <Text size="xs" className="text-gray-500">
+                      Visual timeline showing monthly progress
+                    </Text>
+                  </VStack>
+                </Card>
+                
+                {/* Key Metrics */}
+                <HStack space="md" className="justify-between">
+                  <VStack space="xs" className="items-center">
+                    <Text size="lg" className="text-green-400 font-bold">
+                      $6,847
+                    </Text>
+                    <Text size="xs" className="text-gray-400">
+                      Interest Saved
+                    </Text>
+                  </VStack>
+                  <VStack space="xs" className="items-center">
+                    <Text size="lg" className="text-blue-400 font-bold">
+                      $1,200
+                    </Text>
+                    <Text size="xs" className="text-gray-400">
+                      This Month
+                    </Text>
+                  </VStack>
+                  <VStack space="xs" className="items-center">
+                    <Text size="lg" className="text-orange-400 font-bold">
+                      18
+                    </Text>
+                    <Text size="xs" className="text-gray-400">
+                      Months Left
+                    </Text>
+                  </VStack>
+                </HStack>
               </VStack>
             </Card>
           </VStack>

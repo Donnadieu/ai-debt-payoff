@@ -39,11 +39,55 @@ export default function SettingsScreen() {
             </VStack>
           </Card>
 
-          {/* Preferences */}
+          {/* MVP Feature 2: Payment Strategy Selection */}
           <Card className="p-4 bg-gray-800/50 border border-gray-600/50 shadow-sm">
             <VStack space="md">
               <Heading size="lg" className="text-white font-semibold">
-                Preferences
+                Payment Strategy
+              </Heading>
+              <VStack space="sm">
+                {/* Debt Snowball Strategy */}
+                <Card className="p-3 bg-blue-900/30 border border-blue-600/50">
+                  <VStack space="xs">
+                    <Text size="md" className="text-blue-400 font-semibold">
+                      ✓ Debt Snowball (Selected)
+                    </Text>
+                    <Text size="sm" className="text-gray-300">
+                      Pay minimums on all debts, put extra toward smallest balance first
+                    </Text>
+                    <Text size="xs" className="text-blue-300">
+                      Psychological wins • Faster motivation • 28 months to debt-free
+                    </Text>
+                  </VStack>
+                </Card>
+                
+                {/* Debt Avalanche Strategy */}
+                <Card className="p-3 bg-gray-700/30 border border-gray-600/50">
+                  <VStack space="xs">
+                    <Text size="md" className="text-gray-300 font-semibold">
+                      Debt Avalanche
+                    </Text>
+                    <Text size="sm" className="text-gray-400">
+                      Pay minimums on all debts, put extra toward highest interest rate first
+                    </Text>
+                    <Text size="xs" className="text-green-400">
+                      Save $1,247 more interest • 26 months to debt-free
+                    </Text>
+                  </VStack>
+                </Card>
+                
+                <Button className="bg-blue-600">
+                  <ButtonText>Switch Strategy</ButtonText>
+                </Button>
+              </VStack>
+            </VStack>
+          </Card>
+          
+          {/* App Preferences */}
+          <Card className="p-4 bg-gray-800/50 border border-gray-600/50 shadow-sm">
+            <VStack space="md">
+              <Heading size="lg" className="text-white font-semibold">
+                App Settings
               </Heading>
               <VStack space="sm">
                 <Button variant="outline" className="justify-start border-gray-600 bg-gray-700/30">
