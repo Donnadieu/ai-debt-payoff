@@ -31,8 +31,8 @@ export default function DebtsScreen() {
               <Text size="md" className="text-typography-600 text-center">
                 Add your debts to start creating your personalized payoff plan.
               </Text>
-              <Button className="mt-4 bg-primary-600">
-                <ButtonText className="text-white">Add Your First Debt</ButtonText>
+              <Button>
+                <ButtonText>Add Your First Debt</ButtonText>
               </Button>
             </VStack>
           </Card>
