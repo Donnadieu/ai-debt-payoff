@@ -157,3 +157,6 @@ mobile-app/.env*.local
 
 # typescript
 mobile-app/*.tsbuildinfo
+
+# firebase
+.idx
