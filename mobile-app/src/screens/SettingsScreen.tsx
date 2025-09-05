@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Alert } from 'react-native';
+import { ScrollView, Alert, Platform } from 'react-native';
 import { Box } from '@/components/ui/box';
 import { Text } from '@/components/ui/text';
 import { Heading } from '@/components/ui/heading';
@@ -10,26 +10,42 @@ import { useAuth } from '../contexts/AuthContext';
 
 export default function SettingsScreen() {
   const { user, signOut } = useAuth();
+  
+
+  const performSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error: any) {
+      if (Platform.OS === 'web') {
+        alert(error.message || 'Failed to sign out. Please try again.');
+      } else {
+        Alert.alert('Error', error.message || 'Failed to sign out. Please try again.');
+      }
+    }
+  };
 
   const handleSignOut = () => {
-    Alert.alert(
-      'Sign Out',
-      'Are you sure you want to sign out?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Sign Out', 
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await signOut();
-            } catch (error: any) {
-              Alert.alert('Error', 'Failed to sign out. Please try again.');
-            }
+    
+    if (Platform.OS === 'web') {
+      // Use web confirm dialog
+      if (window.confirm('Are you sure you want to sign out?')) {
+        performSignOut();
+      }
+    } else {
+      // Use React Native Alert
+      Alert.alert(
+        'Sign Out',
+        'Are you sure you want to sign out?',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { 
+            text: 'Sign Out', 
+            style: 'destructive',
+            onPress: performSignOut
           }
-        }
-      ]
-    );
+        ]
+      );
+    }
   };
   return (
     <ScrollView className="flex-1" style={{ backgroundColor: '#121212' }}>

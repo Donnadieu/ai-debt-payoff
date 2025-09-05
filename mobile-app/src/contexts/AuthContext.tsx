@@ -15,6 +15,7 @@ import * as SecureStore from 'expo-secure-store';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Crypto from 'expo-crypto';
+import { Platform } from 'react-native';
 import { auth } from '../config/firebase';
 
 interface AuthContextType {
@@ -29,6 +30,25 @@ interface AuthContextType {
   resetPassword: (email: string) => Promise<void>;
   sendEmailVerification: () => Promise<void>;
 }
+
+// Platform-specific secure storage
+const secureStorage = {
+  async setItem(key: string, value: string): Promise<void> {
+    if (Platform.OS === 'web') {
+      localStorage.setItem(key, value);
+    } else {
+      await SecureStore.setItemAsync(key, value);
+    }
+  },
+  
+  async deleteItem(key: string): Promise<void> {
+    if (Platform.OS === 'web') {
+      localStorage.removeItem(key);
+    } else {
+      await SecureStore.deleteItemAsync(key);
+    }
+  }
+};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -63,12 +83,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       // Store auth state securely
       if (user) {
-        await SecureStore.setItemAsync('isAuthenticated', 'true');
-        await SecureStore.setItemAsync('userEmail', user.email || '');
+        await secureStorage.setItem('isAuthenticated', 'true');
+        await secureStorage.setItem('userEmail', user.email || '');
       } else {
         try {
-          await SecureStore.deleteItemAsync('isAuthenticated');
-          await SecureStore.deleteItemAsync('userEmail');
+          await secureStorage.deleteItem('isAuthenticated');
+          await secureStorage.deleteItem('userEmail');
         } catch (error) {
           // Items may not exist, ignore error
         }
@@ -108,13 +128,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const handleSignOut = async (): Promise<void> => {
     try {
       setIsLoading(true);
+      
+      // Sign out from third-party providers first
+      try {
+        const currentUser = await GoogleSignin.getCurrentUser();
+        if (currentUser) {
+          await GoogleSignin.signOut();
+        }
+      } catch (error) {
+        // Log but don't fail the signout process
+        console.warn('Google signout failed:', error);
+      }
+
+      // Note: Apple doesn't provide a programmatic signout method
+      // The user's Apple ID session will remain active until they manually revoke it
+      
       await signOut(auth);
+      
       // Clear secure storage
       try {
-        await SecureStore.deleteItemAsync('isAuthenticated');
-        await SecureStore.deleteItemAsync('userEmail');
+        await secureStorage.deleteItem('isAuthenticated');
+        await secureStorage.deleteItem('userEmail');
       } catch (error) {
-        // Items may not exist, ignore error
+        console.warn('Secure storage clear error:', error);
       }
     } catch (error: any) {
       throw new Error('Failed to sign out. Please try again.');
