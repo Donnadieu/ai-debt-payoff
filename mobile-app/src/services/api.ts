@@ -1,6 +1,6 @@
 // API service for connecting to the debt payoff backend
 
-const API_BASE_URL = 'http://localhost:5000'; // This will be updated for production
+const API_BASE_URL = 'http://localhost:8000'; // Backend API server
 
 export class ApiService {
   private static baseUrl = API_BASE_URL;
