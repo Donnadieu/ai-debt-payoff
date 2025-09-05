@@ -1,13 +1,36 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import { Box } from '@/components/ui/box';
 import { Text } from '@/components/ui/text';
 import { Heading } from '@/components/ui/heading';
 import { VStack } from '@/components/ui/vstack';
 import { Card } from '@/components/ui/card';
 import { Button, ButtonText } from '@/components/ui/button';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function SettingsScreen() {
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = () => {
+    Alert.alert(
+      'Sign Out',
+      'Are you sure you want to sign out?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Sign Out', 
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await signOut();
+            } catch (error: any) {
+              Alert.alert('Error', 'Failed to sign out. Please try again.');
+            }
+          }
+        }
+      ]
+    );
+  };
   return (
     <ScrollView className="flex-1" style={{ backgroundColor: '#121212' }}>
       <Box className="flex-1 p-4 pt-12">
@@ -129,6 +152,23 @@ export default function SettingsScreen() {
             </VStack>
           </Card>
 
+          {/* Account Information */}
+          <Card className="p-4 bg-gray-800/50 border border-gray-600/50 shadow-sm">
+            <VStack space="md">
+              <Heading size="lg" className="text-white font-semibold">
+                Account
+              </Heading>
+              <VStack space="sm">
+                <Text size="sm" className="text-gray-300">
+                  Signed in as: {user?.email}
+                </Text>
+                <Text size="xs" className="text-gray-400">
+                  Account verified: {user?.emailVerified ? '✓ Yes' : '✗ No'}
+                </Text>
+              </VStack>
+            </VStack>
+          </Card>
+
           {/* Support */}
           <Card className="p-4 bg-gray-800/50 border border-gray-600/50 shadow-sm">
             <VStack space="md">
@@ -148,6 +188,16 @@ export default function SettingsScreen() {
               </VStack>
             </VStack>
           </Card>
+
+          {/* Sign Out */}
+          <Button 
+            className="bg-red-600 hover:bg-red-700"
+            onPress={handleSignOut}
+          >
+            <ButtonText className="text-white font-semibold">
+              Sign Out
+            </ButtonText>
+          </Button>
         </VStack>
       </Box>
     </ScrollView>
