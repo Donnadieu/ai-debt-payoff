@@ -1,73 +1,80 @@
-// Debts management screen
-
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native';
+import { Box } from '@/components/ui/box';
+import { Text } from '@/components/ui/text';
+import { Heading } from '@/components/ui/heading';
+import { VStack } from '@/components/ui/vstack';
+import { Card } from '@/components/ui/card';
+import { Button, ButtonText } from '@/components/ui/button';
 
 export default function DebtsScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.content}>
-        <Text style={styles.title}>My Debts</Text>
-        
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>No debts added yet</Text>
-          <Text style={styles.cardText}>
-            Add your debts to start creating your personalized payoff plan.
-          </Text>
-        </View>
-        
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Get Started</Text>
-          <Text style={styles.cardText}>
-            • Add each debt with balance, interest rate, and minimum payment{'\n'}
-            • Include credit cards, loans, and other debts{'\n'}
-            • The app will calculate the optimal payoff strategy
-          </Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView className="flex-1 bg-background">
+      <Box className="flex-1 p-4 pt-12">
+        <VStack space="lg">
+          {/* Header */}
+          <VStack space="sm">
+            <Heading size="2xl" className="text-typography-900">
+              My Debts
+            </Heading>
+            <Text size="md" className="text-typography-600">
+              Manage and track all your debts in one place
+            </Text>
+          </VStack>
+
+          {/* Empty State */}
+          <Card className="p-6">
+            <VStack space="md" className="items-center">
+              <Heading size="lg" className="text-typography-900 text-center">
+                No debts added yet
+              </Heading>
+              <Text size="md" className="text-typography-600 text-center">
+                Add your debts to start creating your personalized payoff plan.
+              </Text>
+              <Button className="mt-4">
+                <ButtonText>Add Your First Debt</ButtonText>
+              </Button>
+            </VStack>
+          </Card>
+
+          {/* Getting Started Guide */}
+          <Card className="p-4">
+            <VStack space="md">
+              <Heading size="lg" className="text-typography-900">
+                Get Started
+              </Heading>
+              <VStack space="sm">
+                <Text size="md" className="text-typography-700">
+                  • Add each debt with balance, interest rate, and minimum payment
+                </Text>
+                <Text size="md" className="text-typography-700">
+                  • Include credit cards, loans, and other debts
+                </Text>
+                <Text size="md" className="text-typography-700">
+                  • The app will calculate the optimal payoff strategy
+                </Text>
+              </VStack>
+            </VStack>
+          </Card>
+
+          {/* Strategy Information */}
+          <Card className="p-4">
+            <VStack space="md">
+              <Heading size="lg" className="text-typography-900">
+                Payoff Strategies
+              </Heading>
+              <VStack space="sm">
+                <Text size="md" className="text-typography-700">
+                  <Text className="font-semibold">Debt Snowball:</Text> Pay minimums on all debts, put extra toward smallest balance
+                </Text>
+                <Text size="md" className="text-typography-700">
+                  <Text className="font-semibold">Debt Avalanche:</Text> Pay minimums on all debts, put extra toward highest interest rate
+                </Text>
+              </VStack>
+            </VStack>
+          </Card>
+        </VStack>
+      </Box>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 20,
-  },
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 20,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 12,
-  },
-  cardText: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
-  },
-});
