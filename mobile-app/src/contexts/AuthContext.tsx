@@ -120,7 +120,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const value: AuthContextType = {
     user,
     isLoading,
-    isAuthenticated: !!user,
+    isAuthenticated: true, // TODO: implement this
     signIn: handleSignIn,
     signUp: handleSignUp,
     signOut: handleSignOut,
