@@ -14,25 +14,25 @@ export default function SettingsScreen() {
         <VStack space="lg">
           {/* Header */}
           <VStack space="sm">
-            <Heading size="2xl" className="text-typography-900">
+            <Heading size="2xl" className="text-white font-bold">
               Settings
             </Heading>
-            <Text size="md" className="text-typography-600">
+            <Text size="md" className="text-gray-300">
               Customize your debt payoff experience
             </Text>
           </VStack>
 
           {/* App Information */}
-          <Card className="p-4 bg-background-50 border border-outline-200">
+          <Card className="p-4 bg-gray-800/50 border border-gray-600/50 shadow-sm">
             <VStack space="md">
-              <Heading size="lg" className="text-typography-900">
+              <Heading size="lg" className="text-white font-semibold">
                 App Information
               </Heading>
               <VStack space="sm">
-                <Text size="md" className="text-typography-700">
+                <Text size="md" className="text-gray-300">
                   Version: 1.0.0
                 </Text>
-                <Text size="md" className="text-typography-700">
+                <Text size="md" className="text-gray-300">
                   AI Debt Payoff Planner
                 </Text>
               </VStack>
@@ -40,45 +40,45 @@ export default function SettingsScreen() {
           </Card>
 
           {/* Preferences */}
-          <Card className="p-4 bg-background-50 border border-outline-200">
+          <Card className="p-4 bg-gray-800/50 border border-gray-600/50 shadow-sm">
             <VStack space="md">
-              <Heading size="lg" className="text-typography-900">
+              <Heading size="lg" className="text-white font-semibold">
                 Preferences
               </Heading>
               <VStack space="sm">
-                <Button variant="outline" className="justify-start border-outline-300">
-                  <ButtonText className="text-typography-800">Notification Settings</ButtonText>
+                <Button variant="outline" className="justify-start border-gray-600 bg-gray-700/30">
+                  <ButtonText className="text-gray-200">Notification Settings</ButtonText>
                 </Button>
-                <Button variant="outline" className="justify-start border-outline-300">
-                  <ButtonText className="text-typography-800">Theme Settings</ButtonText>
+                <Button variant="outline" className="justify-start border-gray-600 bg-gray-700/30">
+                  <ButtonText className="text-gray-200">Theme Settings</ButtonText>
                 </Button>
-                <Button variant="outline" className="justify-start border-outline-300">
-                  <ButtonText className="text-typography-800">Data Export</ButtonText>
+                <Button variant="outline" className="justify-start border-gray-600 bg-gray-700/30">
+                  <ButtonText className="text-gray-200">Data Export</ButtonText>
                 </Button>
               </VStack>
             </VStack>
           </Card>
 
           {/* Coming Soon */}
-          <Card className="p-4 bg-background-50 border border-outline-200">
+          <Card className="p-4 bg-gray-800/50 border border-gray-600/50 shadow-sm">
             <VStack space="md">
-              <Heading size="lg" className="text-typography-900">
+              <Heading size="lg" className="text-white font-semibold">
                 Features Coming Soon
               </Heading>
               <VStack space="sm">
-                <Text size="md" className="text-typography-700">
+                <Text size="md" className="text-gray-300">
                   • Advanced notification preferences
                 </Text>
-                <Text size="md" className="text-typography-700">
+                <Text size="md" className="text-gray-300">
                   • Multiple data export formats
                 </Text>
-                <Text size="md" className="text-typography-700">
+                <Text size="md" className="text-gray-300">
                   • Custom theme creation
                 </Text>
-                <Text size="md" className="text-typography-700">
+                <Text size="md" className="text-gray-300">
                   • Account synchronization
                 </Text>
-                <Text size="md" className="text-typography-700">
+                <Text size="md" className="text-gray-300">
                   • Goal tracking and milestones
                 </Text>
               </VStack>
@@ -86,20 +86,20 @@ export default function SettingsScreen() {
           </Card>
 
           {/* Support */}
-          <Card className="p-4 bg-background-50 border border-outline-200">
+          <Card className="p-4 bg-gray-800/50 border border-gray-600/50 shadow-sm">
             <VStack space="md">
-              <Heading size="lg" className="text-typography-900">
+              <Heading size="lg" className="text-white font-semibold">
                 Support
               </Heading>
               <VStack space="sm">
-                <Button variant="outline" className="justify-start border-outline-300">
-                  <ButtonText className="text-typography-800">Help & FAQ</ButtonText>
+                <Button variant="outline" className="justify-start border-gray-600 bg-gray-700/30">
+                  <ButtonText className="text-gray-200">Help & FAQ</ButtonText>
                 </Button>
-                <Button variant="outline" className="justify-start border-outline-300">
-                  <ButtonText className="text-typography-800">Contact Support</ButtonText>
+                <Button variant="outline" className="justify-start border-gray-600 bg-gray-700/30">
+                  <ButtonText className="text-gray-200">Contact Support</ButtonText>
                 </Button>
-                <Button variant="outline" className="justify-start border-outline-300">
-                  <ButtonText className="text-typography-800">Privacy Policy</ButtonText>
+                <Button variant="outline" className="justify-start border-gray-600 bg-gray-700/30">
+                  <ButtonText className="text-gray-200">Privacy Policy</ButtonText>
                 </Button>
               </VStack>
             </VStack>
