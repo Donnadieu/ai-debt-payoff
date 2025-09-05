@@ -20,7 +20,7 @@ Implement a cross-platform React Native mobile application with TypeScript that 
 - **Navigation**: React Navigation v6 for screen management
 - **State Management**: React Query + Zustand (lightweight, works well offline)
 - **Offline Storage**: SQLite with react-native-sqlite-storage for robust local data
-- **Authentication**: OAuth 2.0 with biometric fallback using react-native-keychain
+- **Authentication**: Firebase Authentication with Google Sign-In and biometric fallback using react-native-keychain
 - **Push Notifications**: Expo Notifications (handles both iOS and Android)
 - **API Integration**: Axios with retry logic and offline queue management
 - **UI Components**: GluestackUI v3 for consistent design. https://gluestack.io/ui/docs/home/getting-started/installation
@@ -28,7 +28,7 @@ Implement a cross-platform React Native mobile application with TypeScript that 
 ## Technical Approach
 
 ### Frontend Components
-- **Authentication Flow**: Login/register screens with biometric setup
+- **Authentication Flow**: Firebase Auth login/register screens with Google Sign-In and biometric setup
 - **Dashboard**: Debt overview with progress charts and next payment reminders
 - **Debt Management**: Add/edit debt screens with form validation
 - **Payment Tracking**: Quick payment entry with camera receipt scanning
@@ -74,7 +74,7 @@ Implement a cross-platform React Native mobile application with TypeScript that 
 
 High-level task categories that will be created:
 - [ ] **Project Setup**: Initialize React Native project with Expo, configure TypeScript, set up navigation
-- [ ] **Authentication System**: Implement login/register, biometric auth, secure token storage
+- [ ] **Authentication System**: Implement Firebase Auth login/register, Google Sign-In, biometric auth, secure token storage
 - [ ] **Core UI Components**: Build reusable components, screens, and navigation structure
 - [ ] **API Integration**: Connect to FastAPI backend, implement API client with error handling
 - [ ] **Offline Data Management**: Set up SQLite, implement sync logic, handle offline scenarios
