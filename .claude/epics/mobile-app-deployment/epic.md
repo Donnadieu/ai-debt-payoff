@@ -1,147 +1,157 @@
 ---
 name: mobile-app-deployment
 status: backlog
-created: 2025-09-03T23:44:50Z
+created: 2025-09-05T05:47:04Z
 progress: 0%
 prd: .claude/prds/mobile-app-deployment.md
 github: [Will be updated when synced to GitHub]
 ---
 
-# Epic: Mobile App Deployment
+# Epic: Debt Coach Mobile MVP
 
 ## Overview
 
-Implement a cross-platform React Native mobile application with TypeScript that provides full debt payoff planning capabilities with offline functionality and push notifications. The app will leverage the existing FastAPI backend while adding mobile-specific features for enhanced user engagement and accessibility.
+Deliver a minimal viable product (MVP) React Native mobile application focused on 3 core features: debt payoff plan generation, progress visualization, and AI coaching nudges. The MVP prioritizes speed-to-market with existing backend integration and offline-first architecture to provide immediate user value while establishing monetization foundation.
 
 ## Architecture Decisions
 
-- **Framework**: React Native with Expo for rapid development and easier deployment
-- **Language**: TypeScript for type safety and better developer experience
-- **Navigation**: React Navigation v6 for screen management
-- **State Management**: React Query + Zustand (lightweight, works well offline)
-- **Offline Storage**: SQLite with react-native-sqlite-storage for robust local data
-- **Authentication**: Firebase Authentication with Google Sign-In and biometric fallback using react-native-keychain
-- **Push Notifications**: Expo Notifications (handles both iOS and Android)
-- **API Integration**: Axios with retry logic and offline queue management
-- **UI Components**: GluestackUI v3 for consistent design. https://gluestack.io/ui/docs/home/getting-started/installation
+- **Framework**: React Native with Expo (managed workflow for speed)
+- **Language**: TypeScript for type safety
+- **Navigation**: React Navigation v6 with bottom tab navigation
+- **State Management**: React Query + Zustand (lightweight, offline-friendly)
+- **Offline Storage**: SQLite for local persistence and offline-first functionality
+- **Authentication**: Firebase Auth (email/password primary, Google Sign-In optional)
+- **UI Components**: GluestackUI v3 for consistent design system
+- **API Integration**: Axios with retry logic and offline queue for backend communication
 
 ## Technical Approach
 
 ### Frontend Components
-- **Authentication Flow**: Firebase Auth login/register screens with Google Sign-In and biometric setup
-- **Dashboard**: Debt overview with progress charts and next payment reminders
-- **Debt Management**: Add/edit debt screens with form validation
-- **Payment Tracking**: Quick payment entry with camera receipt scanning
-- **Strategy Comparison**: Visual comparison of snowball vs avalanche methods
-- **AI Coaching Center**: Message feed with coaching insights and motivational content
-- **Settings**: Notification preferences, biometric settings, sync management
+- **Debt Input Forms**: Simple form validation for balance, APR, minimum payment
+- **Payoff Plan Generator**: Integration with FastAPI `/plan` endpoint for Snowball/Avalanche calculations  
+- **Progress Dashboard**: Visual progress bars, countdown timers, and key metrics display
+- **AI Coaching Feed**: In-app content feed consuming backend LLM insights
+- **Basic Authentication**: Firebase Auth integration with secure token management
+- **Offline Sync**: SQLite storage with background sync when connectivity restored
 
 ### Backend Services
-- **Existing API Integration**: Leverage current FastAPI endpoints without modification
-- **Sync Service**: Background synchronization between local SQLite and remote API
-- **Notification Scheduler**: Local notification scheduling for payment reminders
-- **Offline Queue**: Store API calls when offline, execute when connection restored
+- **Leverage Existing FastAPI Endpoints**:
+  - `/plan` for debt payoff schedule calculations
+  - `/nudge/generate` for AI coaching content
+  - `/slip/check` for feasibility validation
+- **Mobile API Extensions**: Add user sync and lightweight analytics endpoints
+- **Content Validation**: Ensure LLM-generated coaching content is safe and accurate
 
 ### Infrastructure
-- **Development**: Expo CLI for development and testing
-- **Build**: EAS Build for production app compilation
-- **Distribution**: EAS Submit for app store deployment
-- **Analytics**: Expo Analytics for usage tracking
-- **Error Tracking**: Sentry integration for crash reporting
+- **Deployment**: Expo EAS for build and distribution pipeline
+- **Data Storage**: Local SQLite with cloud backup through Firebase
+- **Performance**: Offline-first with graceful degradation patterns
+- **Monitoring**: Basic crash reporting and usage analytics
 
 ## Implementation Strategy
 
-### Development Phases
-1. **Foundation Setup** (Week 1): Project initialization, navigation, basic UI components
-2. **Core Features** (Week 2-3): Authentication, debt CRUD operations, payment tracking
-3. **Offline & Sync** (Week 4): SQLite integration, sync logic, offline capability
-4. **Mobile Features** (Week 5): Push notifications, biometric auth, background sync
-5. **Polish & Deploy** (Week 6): UI refinement, testing, app store submission
+The MVP follows a strictly scoped 6-week timeline with parallel development approach:
 
-### Risk Mitigation
-- Use Expo managed workflow to avoid native development complexity
-- Implement offline-first architecture to handle connectivity issues
-- Create comprehensive error boundaries and fallback UI states
-- Use TypeScript strict mode to catch errors early
+**Week 1: Foundation Setup**
+- Expo project with TypeScript and navigation structure
+- GluestackUI integration and dark theme setup
+- Firebase Auth implementation
+- Basic screen layouts (Dashboard, Debts, Settings)
 
-### Testing Approach
-- Jest for unit testing utility functions
-- React Native Testing Library for component tests
-- Manual testing on both iOS and Android devices
-- Expo Go for rapid testing during development
+**Week 2: Debt Management Core**
+- Debt input forms with validation
+- SQLite schema and data persistence
+- FastAPI integration for plan generation
+- Snowball vs Avalanche strategy comparison UI
+
+**Week 3: Progress Visualization** 
+- Dashboard with progress indicators and charts
+- Payment logging and history tracking
+- Metrics calculations (debt remaining, interest saved, timeline)
+- Milestone celebrations and achievements
+
+**Week 4: AI Coaching Integration**
+- Backend LLM integration for coaching nudges
+- Content feed UI with personalized recommendations
+- Safety validation and error handling
+- Offline fallback content
+
+**Week 5: Monetization & Polish**
+- Subscription paywall implementation
+- Premium feature gating
+- UI accessibility improvements  
+- Performance optimization and testing
+
+**Week 6: Store Preparation & Launch**
+- App store assets and metadata
+- Final QA testing on devices
+- Store submission process
+- Production deployment and monitoring
 
 ## Task Breakdown Preview
 
-High-level task categories that will be created:
-- [ ] **Project Setup**: Initialize React Native project with Expo, configure TypeScript, set up navigation
-- [ ] **Authentication System**: Implement Firebase Auth login/register, Google Sign-In, biometric auth, secure token storage
-- [ ] **Core UI Components**: Build reusable components, screens, and navigation structure
-- [ ] **API Integration**: Connect to FastAPI backend, implement API client with error handling
-- [ ] **Offline Data Management**: Set up SQLite, implement sync logic, handle offline scenarios
-- [ ] **Push Notifications**: Configure notification permissions, scheduling, and delivery
-- [ ] **App Store Preparation**: Configure build settings, create app store assets, handle submissions
-- [ ] **Testing & Quality Assurance**: Write tests, perform device testing, fix bugs
+High-level task categories for implementation:
+
+- [ ] **Foundation Setup**: Expo project init, navigation, authentication, UI framework
+- [ ] **Debt Management**: Input forms, data persistence, backend API integration
+- [ ] **Progress Dashboard**: Visual components, metrics calculation, payment tracking
+- [ ] **AI Coaching System**: LLM integration, content feed, safety validation
+- [ ] **Authentication & Security**: Firebase Auth, data encryption, offline sync
+- [ ] **Monetization Features**: Subscription paywall, premium gating, billing integration
+- [ ] **Performance & Polish**: Optimization, accessibility, error handling
+- [ ] **Testing & Quality**: Unit tests, integration tests, device testing
+- [ ] **Store Deployment**: App store preparation, assets, submission process
 
 ## Dependencies
 
 ### External Dependencies
-- Apple Developer Program membership ($99/year)
-- Google Play Console account ($25 one-time)
-- Expo account for EAS Build and Submit services
-- Backend API completion and stability
+- **Apple Developer Program**: iOS app store deployment
+- **Google Play Console**: Android app store deployment
+- **Expo Account**: Managed workflow and EAS builds
+- **Firebase Project**: Authentication and cloud services
 
-### Internal Dependencies
-- Completion of backend API foundation
-- Device access for testing (iOS and Android)
-- App store developer accounts setup
+### Internal Dependencies  
+- **FastAPI Backend**: Stable API endpoints for plan generation and coaching
+- **Backend Team**: Support for mobile-specific API extensions
+- **LLM Pipeline**: Content validation system for safe AI coaching
 
-### Third-Party Services
-- Expo ecosystem (CLI, EAS Build/Submit, Notifications)
-- Sentry for error tracking
-- SQLite for offline storage
-- React Navigation for navigation
-- React Query for API state management
+### Critical Path Items
+1. FastAPI backend stability and mobile API readiness
+2. Firebase Auth configuration and testing
+3. SQLite schema design and migration strategy
+4. App store developer account setup and approval workflow
 
 ## Success Criteria (Technical)
 
 ### Performance Benchmarks
 - App launch time < 3 seconds on mid-range devices
-- Smooth 60fps animations and transitions
-- Offline data access with zero loading delay
-- Background sync completion < 30 seconds
+- Offline functionality works seamlessly without network
+- API response times < 2 seconds for plan generation
+- 60fps smooth animations and navigation transitions
 
 ### Quality Gates
-- 100% TypeScript coverage (no any types)
-- 90%+ test coverage for utility functions
-- Zero memory leaks during normal operation
-- Crash-free rate > 99.9%
+- 90%+ automated test coverage for core business logic
+- Zero critical bugs in debt calculation algorithms
+- WCAG 2.1 AA accessibility compliance
+- Successful app store approval on first submission
 
 ### Acceptance Criteria
-- Successfully builds and runs on both iOS and Android
-- All PRD functional requirements implemented
-- Passes app store review guidelines
-- Offline sync accuracy > 95%
+- Users can complete full debt input and plan generation offline
+- AI coaching content displays safely with fallback mechanisms
+- Subscription paywall converts users with clear value proposition
+- Cross-device data sync works reliably
 
 ## Estimated Effort
 
-### Overall Timeline: 6 weeks (single developer)
+**Timeline**: 6 weeks (single developer)
+**Total Hours**: ~240 hours (40 hours/week)
 
-**Week 1**: Project foundation and basic navigation
-**Week 2-3**: Core debt management features
-**Week 4**: Offline functionality and sync
-**Week 5**: Mobile-specific features (notifications, biometrics)
-**Week 6**: Testing, polish, and app store submission
-
-### Resource Requirements
-- One React Native developer (learning curve included)
-- iOS device for testing and development
-- Android device for testing and development
+**Resource Requirements**:
+- 1 Senior React Native Developer (primary)
+- Backend API support (existing team, ~8 hours)
+- iOS and Android test devices
 - App store developer accounts
 
-### Critical Path Items
-1. Learning React Native and Expo ecosystem
-2. Implementing robust offline sync logic
-3. App store approval process timing
-4. Backend API stability and availability
+**Critical Path**: Foundation → Debt Management → Progress Dashboard → AI Coaching → Monetization → Deployment
 
-The simplified approach leverages Expo's managed workflow to minimize native development complexity while delivering a production-ready mobile app that meets all PRD requirements within an aggressive timeline.
+**Risk Buffer**: 20% additional time allocated for app store approval and unexpected integration issues
